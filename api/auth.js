@@ -96,7 +96,8 @@ async function login(req, res) {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
-        companyName: user.company_name
+        companyName: user.company_name,
+        role: user.role
       }
     });
   } catch (error) {

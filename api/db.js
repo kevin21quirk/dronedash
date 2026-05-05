@@ -21,10 +21,31 @@ async function initializeDatabase() {
         first_name VARCHAR(100),
         last_name VARCHAR(100),
         company_name VARCHAR(255),
+        role VARCHAR(20) DEFAULT 'client',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        last_login TIMESTAMP
+        last_login TIMESTAMP,
+        created_by INTEGER REFERENCES users(id)
       )
     `);
+
+    // Create super admin if doesn't exist
+    const bcrypt = require('bcryptjs');
+    const adminEmail = 'kevin@aibridgesolutions.co.uk';
+    const adminPassword = 'a15Dz6fl!';
+    
+    const adminExists = await client.query(
+      'SELECT * FROM users WHERE email = $1',
+      [adminEmail]
+    );
+
+    if (adminExists.rows.length === 0) {
+      const passwordHash = await bcrypt.hash(adminPassword, 10);
+      await client.query(
+        'INSERT INTO users (email, password_hash, first_name, last_name, role) VALUES ($1, $2, $3, $4, $5)',
+        [adminEmail, passwordHash, 'Kevin', 'Admin', 'admin']
+      );
+      console.log('Super admin account created');
+    }
 
     // Media library table
     await client.query(`

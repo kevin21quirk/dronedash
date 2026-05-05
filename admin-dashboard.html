@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Precision Sky Solutions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            color: white;
+        }
+        .dashboard-header .grid-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .admin-badge {
+            background: #f39c12;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+        .admin-tabs {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+            display: flex;
+            gap: 1rem;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        .tab-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        .btn-primary-custom {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-primary-custom:hover {
+            background: #2a5ba8;
+        }
+        .clients-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .clients-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .clients-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+        .modal-overlay-custom {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay-custom.active {
+            display: flex;
+        }
+        .modal-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="grid-container">
+                <div class="dashboard-logo">
+                    <i class="fas fa-shield-alt"></i> Admin Dashboard
+                </div>
+                <div class="user-info">
+                    <span class="admin-badge"><i class="fas fa-crown"></i> Super Admin</span>
+                    <span id="userName">Kevin</span>
+                    <a href="#" class="btn-logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid-container">
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="clients">
+                    <i class="fas fa-users"></i> Client Management
+                </button>
+                <button class="tab-btn" data-tab="media">
+                    <i class="fas fa-photo-video"></i> Media Library
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Clients Tab -->
+                <div class="tab-pane active" id="clients-tab">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2><i class="fas fa-users"></i> Manage Clients</h2>
+                        <button class="btn-primary-custom" id="addClientBtn">
+                            <i class="fas fa-user-plus"></i> Add New Client
+                        </button>
+                    </div>
+
+                    <div id="successMessage" class="success-message"></div>
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <table class="clients-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Company</th>
+                                <th>Created</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientsTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">Loading clients...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Media Tab -->
+                <div class="tab-pane" id="media-tab">
+                    <h2><i class="fas fa-photo-video"></i> All Client Media</h2>
+                    <p style="color: #666; margin-top: 1rem;">Media management coming soon...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Client Modal -->
+    <div class="modal-overlay-custom" id="addClientModal">
+        <div class="modal-box">
+            <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-user-plus"></i> Create New Client</h3>
+            <form id="addClientForm">
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" id="clientFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" id="clientLastName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="clientEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="clientCompany">
+                </div>
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="text" id="clientPassword" required>
+                    <small style="color: #666;">You'll email this to the client</small>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary-custom" style="flex: 1;">
+                        <i class="fas fa-save"></i> Create Client
+                    </button>
+                    <button type="button" class="btn-delete" id="cancelClientBtn" style="flex: 1;">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        // Check if admin
+        if (!token || user.role !== 'admin') {
+            window.location.href = 'client-login.html';
+        }
+
+        // Set user info
+        if (user.firstName) {
+            $('#userName').text(user.firstName);
+        }
+
+        // Logout
+        $('#logoutBtn').click(function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = 'client-login.html';
+        });
+
+        // Tab switching
+        $('.tab-btn').click(function() {
+            const tab = $(this).data('tab');
+            $('.tab-btn').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-pane').removeClass('active');
+            $(`#${tab}-tab`).addClass('active');
+        });
+
+        // Load clients
+        async function loadClients() {
+            try {
+                const response = await fetch(`${API_URL}/clients`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayClients(data.clients);
+                }
+            } catch (error) {
+                console.error('Error loading clients:', error);
+            }
+        }
+
+        function displayClients(clients) {
+            if (clients.length === 0) {
+                $('#clientsTableBody').html('<tr><td colspan="6" style="text-align: center; padding: 2rem;">No clients yet. Click "Add New Client" to get started.</td></tr>');
+                return;
+            }
+
+            const rows = clients.map(client => `
+                <tr>
+                    <td>${client.first_name} ${client.last_name}</td>
+                    <td>${client.email}</td>
+                    <td>${client.company_name || '-'}</td>
+                    <td>${new Date(client.created_at).toLocaleDateString()}</td>
+                    <td>${client.last_login ? new Date(client.last_login).toLocaleDateString() : 'Never'}</td>
+                    <td>
+                        <button class="btn-delete" onclick="deleteClient(${client.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            $('#clientsTableBody').html(rows);
+        }
+
+        // Add client modal
+        $('#addClientBtn').click(() => $('#addClientModal').addClass('active'));
+        $('#cancelClientBtn').click(() => $('#addClientModal').removeClass('active'));
+
+        // Create client
+        $('#addClientForm').submit(async function(e) {
+            e.preventDefault();
+
+            const clientData = {
+                firstName: $('#clientFirstName').val(),
+                lastName: $('#clientLastName').val(),
+                email: $('#clientEmail').val(),
+                companyName: $('#clientCompany').val(),
+                password: $('#clientPassword').val()
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/clients`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(clientData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess('Client created successfully!');
+                    $('#addClientModal').removeClass('active');
+                    $('#addClientForm')[0].reset();
+                    loadClients();
+                } else {
+                    showError(data.error || 'Failed to create client');
+                }
+            } catch (error) {
+                showError('Connection error. Please try again.');
+            }
+        });
+
+        // Delete client
+        window.deleteClient = async function(clientId) {
+            if (!confirm('Are you sure you want to delete this client? All their media will also be deleted.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/clients`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ clientId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess('Client deleted successfully');
+                    loadClients();
+                } else {
+                    showError('Failed to delete client');
+                }
+            } catch (error) {
+                showError('Connection error');
+            }
+        };
+
+        function showSuccess(message) {
+            $('#successMessage').text(message).show();
+            setTimeout(() => $('#successMessage').hide(), 5000);
+        }
+
+        function showError(message) {
+            $('#errorMessage').text(message).show();
+            setTimeout(() => $('#errorMessage').hide(), 5000);
+        }
+
+        // Load clients on page load
+        loadClients();
+    </script>
+</body>
+</html>
