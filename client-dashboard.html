@@ -585,6 +585,45 @@
             displayMedia();
         });
 
+        // Load projects
+        async function loadProjects() {
+            try {
+                const response = await fetch(`${API_URL}/projects`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.projects.length > 0) {
+                    const projectsHtml = data.projects.map(project => `
+                        <div class="project-card">
+                            <h4>${project.project_name}</h4>
+                            <p>${project.description || 'No description provided'}</p>
+                            <div style="margin-top: 1rem;">
+                                <span class="project-status status-${project.status}">${project.status.toUpperCase()}</span>
+                                <span style="margin-left: 1rem; color: #666;">
+                                    <i class="fas fa-calendar"></i> ${new Date(project.created_at).toLocaleDateString()}
+                                </span>
+                            </div>
+                        </div>
+                    `).join('');
+                    $('#projectsList').html(projectsHtml);
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Filter buttons
+        $('.filter-btn').click(function() {
+            currentFilter = $(this).data('filter');
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+            displayMedia();
+        });
+
         // Load media on page load
         loadMedia();
     </script>
