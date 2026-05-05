@@ -165,11 +165,21 @@
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
-        .form-group input {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.75rem;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
         }
         .success-message, .error-message {
             padding: 1rem;
@@ -421,7 +431,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                         <h2><i class="fas fa-photo-video"></i> All Client Media</h2>
                         <div style="display: flex; gap: 1rem;">
-                            <select id="mediaClientFilter" style="padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                            <select id="mediaClientFilter" style="padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; min-width: 200px; font-size: 1rem;">
                                 <option value="">All Clients</option>
                             </select>
                             <button class="btn-primary-custom" id="uploadMediaBtn">
@@ -492,17 +502,17 @@
                 </div>
                 <div class="form-group">
                     <label>Assign to Client *</label>
-                    <select id="projectClient" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <select id="projectClient" required>
                         <option value="">Select a client...</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="projectDescription" rows="4" style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;"></textarea>
+                    <textarea id="projectDescription" rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Status *</label>
-                    <select id="projectStatus" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <select id="projectStatus" required>
                         <option value="active">Active</option>
                         <option value="completed">Completed</option>
                         <option value="on-hold">On Hold</option>
@@ -527,7 +537,7 @@
             <form id="uploadMediaForm">
                 <div class="form-group">
                     <label>Assign to Client *</label>
-                    <select id="mediaClient" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <select id="mediaClient" required>
                         <option value="">Select a client...</option>
                     </select>
                 </div>
@@ -542,7 +552,7 @@
                 </div>
                 <div class="form-group">
                     <label>Media Type *</label>
-                    <select id="mediaType" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                    <select id="mediaType" required>
                         <option value="image">Image</option>
                         <option value="video">Video</option>
                     </select>
