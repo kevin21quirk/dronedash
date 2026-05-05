@@ -90,8 +90,11 @@ async function initializeDatabase() {
     `);
 
     console.log('Database tables initialized successfully');
+    isInitialized = true;
   } catch (error) {
     console.error('Error initializing database:', error);
+    console.error('Error details:', error.message);
+    console.error('Stack:', error.stack);
     throw error;
   } finally {
     client.release();
