@@ -2306,12 +2306,28 @@ section {
         transform: translate(-50%, -50%) rotate(1080deg) scale(1);
     }
     85% {
-        opacity: 0.7;
+        opacity: 0.5;
         width: 500px;
         height: 500px;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%) rotate(1080deg) scale(0.95);
+        transform: translate(-50%, -50%) rotate(1080deg) scale(0.9);
+    }
+    95% {
+        opacity: 0;
+        width: 500px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(1080deg) scale(0.8);
+    }
+    100% {
+        opacity: 0;
+        width: 500px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(1080deg) scale(0.8);
     }
     75% {
         opacity: 1;

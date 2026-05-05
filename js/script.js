@@ -31,8 +31,8 @@ $(document).ready(function() {
     // Switch videos every 5 seconds
     setInterval(switchVideo, 5000);
 
-    $('.btn-contact, a[href="contact.html"]').click(function(e) {
-        if ($(this).hasClass('btn-contact') || $(this).attr('href') === 'contact.html') {
+    $('.btn-contact, #getQuoteBtn').click(function(e) {
+        if ($(this).hasClass('btn-contact') || $(this).attr('id') === 'getQuoteBtn') {
             e.preventDefault();
             
             const droneElement = $('<div class="drone-flying"><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><g fill="#3672cc"><circle cx="80" cy="80" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="320" cy="80" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="80" cy="220" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="320" cy="220" r="35" fill="#5a9fd4" opacity="0.6"/><rect x="70" y="70" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="310" y="70" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="70" y="210" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="310" y="210" width="20" height="20" rx="3" fill="#2a5ba8"/><line x1="95" y1="80" x2="160" y2="120" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="305" y1="80" x2="240" y2="120" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="95" y1="220" x2="160" y2="180" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="305" y1="220" x2="240" y2="180" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><ellipse cx="200" cy="150" rx="60" ry="40" fill="#2a5ba8"/><rect x="170" y="130" width="60" height="40" rx="8" fill="#3672cc"/><circle cx="200" cy="165" r="18" fill="#1a1a1a"/><circle cx="200" cy="165" r="12" fill="#4a4a4a"/><polygon points="180,190 220,190 210,210 190,210" fill="#5a9fd4"/><polygon points="185,210 215,210 210,220 190,220" fill="#3672cc"/><rect x="190" y="120" width="20" height="8" rx="2" fill="#ff4444"/></g></svg></div>');
