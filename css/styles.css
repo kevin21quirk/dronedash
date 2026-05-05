@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-image {
-    height: 80px;
+    height: 90px;
     width: auto;
     display: block;
     transition: var(--transition);
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .main-nav.scrolled .logo-image {
-    height: 70px;
+    height: 80px;
     filter: brightness(0) invert(1);
 }
 
