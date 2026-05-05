@@ -1,28 +1,29 @@
-const { login } = require('./auth');
 const { initializeDatabase } = require('./db');
 
 module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  if (req.method !== 'POST') {
+  if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // Ensure database is initialized
     await initializeDatabase();
-    return login(req, res);
+    res.json({ 
+      success: true, 
+      message: 'Database initialized successfully' 
+    });
   } catch (error) {
-    console.error('Login endpoint error:', error);
-    return res.status(500).json({ 
-      error: 'Server error',
+    console.error('Initialization error:', error);
+    res.status(500).json({ 
+      error: 'Failed to initialize database',
       details: error.message 
     });
   }

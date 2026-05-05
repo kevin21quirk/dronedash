@@ -8,10 +8,20 @@ const pool = new Pool({
   }
 });
 
+// Track if database has been initialized
+let isInitialized = false;
+
 // Initialize database tables
 async function initializeDatabase() {
+  // Skip if already initialized
+  if (isInitialized) {
+    return;
+  }
+
   const client = await pool.connect();
   try {
+    console.log('Initializing database...');
+    
     // Users table
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -24,9 +34,10 @@ async function initializeDatabase() {
         role VARCHAR(20) DEFAULT 'client',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         last_login TIMESTAMP,
-        created_by INTEGER REFERENCES users(id)
+        created_by INTEGER
       )
     `);
+    console.log('Users table ready');
 
     // Create super admin if doesn't exist
     const bcrypt = require('bcryptjs');
@@ -45,6 +56,8 @@ async function initializeDatabase() {
         [adminEmail, passwordHash, 'Kevin', 'Admin', 'admin']
       );
       console.log('Super admin account created');
+    } else {
+      console.log('Super admin already exists');
     }
 
     // Media library table
