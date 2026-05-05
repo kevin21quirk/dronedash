@@ -8,23 +8,30 @@ $(document).ready(function() {
     });
 
     // Hero video rotation
-    const iframe1 = document.getElementById('heroVideo1');
-    const iframe2 = document.getElementById('heroVideo2');
+    const video1 = document.getElementById('heroVideo1');
+    const video2 = document.getElementById('heroVideo2');
     let currentVideo = 1;
+
+    // Ensure first video plays
+    if (video1) {
+        video1.play().catch(e => console.log('Video autoplay prevented:', e));
+    }
 
     function switchVideo() {
         if (currentVideo === 1) {
-            iframe1.classList.remove('active');
-            iframe2.classList.add('active');
+            video1.classList.remove('active');
+            video2.classList.add('active');
+            if (video2) video2.play();
             currentVideo = 2;
         } else {
-            iframe2.classList.remove('active');
-            iframe1.classList.add('active');
+            video2.classList.remove('active');
+            video1.classList.add('active');
+            if (video1) video1.play();
             currentVideo = 1;
         }
     }
 
-    // Switch videos every 8 seconds (give more time to watch)
+    // Switch videos every 8 seconds
     setInterval(switchVideo, 8000);
 
     $('.btn-contact, #getQuoteBtn').click(function(e) {
