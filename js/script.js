@@ -1,0 +1,372 @@
+$(document).ready(function() {
+    $(document).foundation();
+
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
+
+    // Hero video rotation
+    const video1 = document.getElementById('heroVideo1');
+    const video2 = document.getElementById('heroVideo2');
+    let currentVideo = 1;
+
+    function switchVideo() {
+        if (currentVideo === 1) {
+            video1.classList.remove('active');
+            video2.classList.add('active');
+            video2.currentTime = 0;
+            video2.play();
+            currentVideo = 2;
+        } else {
+            video2.classList.remove('active');
+            video1.classList.add('active');
+            video1.currentTime = 0;
+            video1.play();
+            currentVideo = 1;
+        }
+    }
+
+    // Switch videos every 5 seconds
+    setInterval(switchVideo, 5000);
+
+    $('.btn-contact, a[href="contact.html"]').click(function(e) {
+        if ($(this).hasClass('btn-contact') || $(this).attr('href') === 'contact.html') {
+            e.preventDefault();
+            
+            const droneElement = $('<div class="drone-flying"><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><g fill="#3672cc"><circle cx="80" cy="80" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="320" cy="80" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="80" cy="220" r="35" fill="#5a9fd4" opacity="0.6"/><circle cx="320" cy="220" r="35" fill="#5a9fd4" opacity="0.6"/><rect x="70" y="70" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="310" y="70" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="70" y="210" width="20" height="20" rx="3" fill="#2a5ba8"/><rect x="310" y="210" width="20" height="20" rx="3" fill="#2a5ba8"/><line x1="95" y1="80" x2="160" y2="120" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="305" y1="80" x2="240" y2="120" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="95" y1="220" x2="160" y2="180" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><line x1="305" y1="220" x2="240" y2="180" stroke="#3672cc" stroke-width="10" stroke-linecap="round"/><ellipse cx="200" cy="150" rx="60" ry="40" fill="#2a5ba8"/><rect x="170" y="130" width="60" height="40" rx="8" fill="#3672cc"/><circle cx="200" cy="165" r="18" fill="#1a1a1a"/><circle cx="200" cy="165" r="12" fill="#4a4a4a"/><polygon points="180,190 220,190 210,210 190,210" fill="#5a9fd4"/><polygon points="185,210 215,210 210,220 190,220" fill="#3672cc"/><rect x="190" y="120" width="20" height="8" rx="2" fill="#ff4444"/></g></svg></div>');
+            $('body').append(droneElement);
+            
+            setTimeout(function() {
+                droneElement.remove();
+            }, 3500);
+            
+            $('#quoteModal').addClass('active');
+            $('body').css('overflow', 'hidden');
+        }
+    });
+
+    $('#closeModal').click(function(e) {
+        $('#quoteModal').removeClass('active');
+        $('body').css('overflow', 'auto');
+    });
+
+    $('.quote-modal .modal-overlay').click(function(e) {
+        if (e.target === this) {
+            $('#quoteModal').removeClass('active');
+            $('body').css('overflow', 'auto');
+        }
+    });
+
+    $('select').on('change', function() {
+        if ($(this).val() !== '') {
+            $(this).addClass('has-value');
+        } else {
+            $(this).removeClass('has-value');
+        }
+    });
+
+    $('#quoteForm').submit(function(e) {
+        e.preventDefault();
+        
+        $('#quoteModal').removeClass('active');
+        
+        setTimeout(function() {
+            $('#thankYouModal').addClass('active');
+        }, 300);
+        
+        $('#quoteForm')[0].reset();
+        $('select').removeClass('has-value');
+    });
+
+    $('#closeThankYou, #closeThankYouBtn').click(function(e) {
+        $('#thankYouModal').removeClass('active');
+        $('body').css('overflow', 'auto');
+    });
+
+    $('.thank-you-modal .modal-overlay').click(function(e) {
+        if (e.target === this) {
+            $('#thankYouModal').removeClass('active');
+            $('body').css('overflow', 'auto');
+        }
+    });
+
+    $(document).keyup(function(e) {
+        if (e.key === "Escape") {
+            $('.quote-modal, .thank-you-modal').removeClass('active');
+            $('body').css('overflow', 'auto');
+        }
+    });
+
+    const nav = $('#mainNav');
+    const navToggle = $('#navToggle');
+    const navMenu = $('#navMenu');
+    
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+            nav.addClass('scrolled');
+        } else {
+            nav.removeClass('scrolled');
+        }
+    });
+
+    navToggle.click(function() {
+        $(this).toggleClass('active');
+        navMenu.toggleClass('active');
+        
+        const spans = $(this).find('span');
+        if ($(this).hasClass('active')) {
+            spans.eq(0).css('transform', 'rotate(45deg) translateY(8px)');
+            spans.eq(1).css('opacity', '0');
+            spans.eq(2).css('transform', 'rotate(-45deg) translateY(-8px)');
+        } else {
+            spans.css({
+                'transform': 'none',
+                'opacity': '1'
+            });
+        }
+    });
+
+    $('.nav-link').click(function(e) {
+        const href = $(this).attr('href');
+        
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            const target = $(href);
+            
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 800);
+                
+                navMenu.removeClass('active');
+                navToggle.removeClass('active');
+                navToggle.find('span').css({
+                    'transform': 'none',
+                    'opacity': '1'
+                });
+            }
+        }
+    });
+
+    $(window).scroll(function() {
+        const scrollPos = $(window).scrollTop() + 100;
+        
+        $('.nav-link').each(function() {
+            const href = $(this).attr('href');
+            if (href.startsWith('#')) {
+                const target = $(href);
+                if (target.length) {
+                    if (target.offset().top <= scrollPos && target.offset().top + target.outerHeight() > scrollPos) {
+                        $('.nav-link').removeClass('active');
+                        $(this).addClass('active');
+                    }
+                }
+            }
+        });
+    });
+
+    const statNumbers = $('.stat-number');
+    let statsAnimated = false;
+
+    function animateStats() {
+        statNumbers.each(function() {
+            const $this = $(this);
+            const target = parseInt($this.data('target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(function() {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                $this.text(Math.floor(current) + '+');
+            }, 16);
+        });
+    }
+
+    $(window).scroll(function() {
+        if (!statsAnimated) {
+            const statsSection = $('.stats-section');
+            if (statsSection.length) {
+                const statsTop = statsSection.offset().top;
+                const statsBottom = statsTop + statsSection.outerHeight();
+                const scrollPos = $(window).scrollTop() + $(window).height();
+                
+                if (scrollPos > statsTop && $(window).scrollTop() < statsBottom) {
+                    animateStats();
+                    statsAnimated = true;
+                }
+            }
+        }
+    });
+
+    $('.portfolio-item').hover(
+        function() {
+            $(this).css('z-index', '10');
+        },
+        function() {
+            $(this).css('z-index', '1');
+        }
+    );
+
+    $('#contactForm').submit(function(e) {
+        e.preventDefault();
+        
+        $('#thankYouModal').addClass('active');
+        $('body').css('overflow', 'hidden');
+        
+        this.reset();
+    });
+
+    $('.newsletter-form').submit(function(e) {
+        e.preventDefault();
+        const email = $(this).find('input[type="email"]').val();
+        alert('Thank you for subscribing! We will keep you updated.');
+        this.reset();
+    });
+
+    let lastScroll = 0;
+    $(window).scroll(function() {
+        const currentScroll = $(window).scrollTop();
+        
+        if (currentScroll > lastScroll && currentScroll > 500) {
+            nav.css('transform', 'translateY(-100%)');
+        } else {
+            nav.css('transform', 'translateY(0)');
+        }
+        
+        lastScroll = currentScroll;
+    });
+
+    $('.service-item, .portfolio-item, .industry-block').each(function(index) {
+        $(this).css('animation-delay', (index * 0.1) + 's');
+    });
+
+    const heroVideo = $('.hero-video');
+    if (heroVideo.length) {
+        heroVideo[0].playbackRate = 0.8;
+    }
+
+    $(window).on('load', function() {
+        $('body').addClass('loaded');
+    });
+
+    const parallaxElements = $('.hero-content, .about-image');
+    $(window).scroll(function() {
+        const scrolled = $(window).scrollTop();
+        parallaxElements.each(function() {
+            const speed = 0.5;
+            const yPos = -(scrolled * speed);
+            $(this).css('transform', 'translateY(' + yPos + 'px)');
+        });
+    });
+
+    $('.service-link, .btn').on('mouseenter', function(e) {
+        const x = e.pageX - $(this).offset().left;
+        const y = e.pageY - $(this).offset().top;
+        
+        $(this).append('<span class="ripple"></span>');
+        $('.ripple').css({
+            top: y + 'px',
+            left: x + 'px'
+        }).addClass('animate');
+        
+        setTimeout(() => {
+            $('.ripple').remove();
+        }, 600);
+    });
+
+    if ($(window).width() > 768) {
+        $('.industry-block').each(function(index) {
+            $(this).hover(
+                function() {
+                    $(this).siblings().css('filter', 'grayscale(50%) brightness(0.7)');
+                },
+                function() {
+                    $(this).siblings().css('filter', 'none');
+                }
+            );
+        });
+    }
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.service-item, .portfolio-item, .industry-block').forEach(el => {
+        observer.observe(el);
+    });
+
+    $('.filter-btn').click(function() {
+        const filter = $(this).data('filter');
+        
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+        
+        if (filter === 'all') {
+            $('.portfolio-card').fadeIn(400);
+        } else {
+            $('.portfolio-card').each(function() {
+                if ($(this).data('category') === filter) {
+                    $(this).fadeIn(400);
+                } else {
+                    $(this).fadeOut(400);
+                }
+            });
+        }
+    });
+
+    const stickyElements = document.querySelectorAll('.sticky-element');
+    
+    function updateStickyElements() {
+        stickyElements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const parentRect = element.parentElement.getBoundingClientRect();
+            
+            if (rect.top <= 120 && parentRect.bottom > window.innerHeight / 2) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    }
+    
+    $(window).scroll(updateStickyElements);
+    updateStickyElements();
+
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+        const sections = document.querySelectorAll('section');
+        
+        sections.forEach((section, index) => {
+            if (index > 0) {
+                const prevSection = sections[index - 1];
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.transform = 'translateY(0)';
+                            entry.target.style.opacity = '1';
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '-50px'
+                });
+                
+                sectionObserver.observe(section);
+            }
+        });
+    }
+});

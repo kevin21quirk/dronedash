@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - Precision Sky Solutions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: #f5f7fa;
+        }
+        .dashboard-header {
+            background: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .dashboard-header .grid-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-logo {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .stat-card h3 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            color: var(--text-dark);
+        }
+        .stat-card p {
+            color: #666;
+            margin: 0;
+        }
+        .media-library {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .library-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .library-header h2 {
+            margin: 0;
+            color: var(--text-dark);
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .media-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .media-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+        .media-info {
+            padding: 1rem;
+        }
+        .media-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .media-meta {
+            font-size: 0.875rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        .media-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .btn-download {
+            flex: 1;
+            padding: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-download:hover {
+            background: #2a5ba8;
+        }
+        .btn-view {
+            flex: 1;
+            padding: 0.5rem;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-view:hover {
+            background: #229954;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="grid-container">
+                <div class="dashboard-logo">
+                    <i class="fas fa-drone"></i> Precision Sky Solutions
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">PS</div>
+                    <span id="userName">Client</span>
+                    <a href="#" class="btn-logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid-container">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-photo-video"></i>
+                    <h3 id="totalMedia">0</h3>
+                    <p>Total Media Files</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-video"></i>
+                    <h3 id="totalVideos">0</h3>
+                    <p>Videos</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-image"></i>
+                    <h3 id="totalImages">0</h3>
+                    <p>Images</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-folder"></i>
+                    <h3 id="totalProjects">0</h3>
+                    <p>Projects</p>
+                </div>
+            </div>
+
+            <!-- Media Library -->
+            <div class="media-library">
+                <div class="library-header">
+                    <h2><i class="fas fa-photo-video"></i> Media Library</h2>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="video">Videos</button>
+                        <button class="filter-btn" data-filter="image">Images</button>
+                    </div>
+                </div>
+
+                <div id="mediaGrid" class="media-grid">
+                    <!-- Media cards will be loaded here -->
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>No Media Files Yet</h3>
+                    <p>Your media library is empty. Files will appear here once uploaded.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+        let allMedia = [];
+        let currentFilter = 'all';
+
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        if (!token) {
+            window.location.href = 'client-login.html';
+        }
+
+        // Set user info
+        if (user.firstName) {
+            $('#userName').text(`${user.firstName} ${user.lastName || ''}`);
+            $('#userAvatar').text(user.firstName.charAt(0) + (user.lastName?.charAt(0) || ''));
+        }
+
+        // Logout
+        $('#logoutBtn').click(function(e) {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'client-login.html';
+        });
+
+        // Load media
+        async function loadMedia() {
+            try {
+                const response = await fetch(`${API_URL}/media`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    allMedia = data.media;
+                    updateStats();
+                    displayMedia();
+                } else {
+                    console.error('Failed to load media');
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+            }
+        }
+
+        // Update stats
+        function updateStats() {
+            const videos = allMedia.filter(m => m.file_type.includes('video')).length;
+            const images = allMedia.filter(m => m.file_type.includes('image')).length;
+            const projects = [...new Set(allMedia.map(m => m.project_name).filter(Boolean))].length;
+
+            $('#totalMedia').text(allMedia.length);
+            $('#totalVideos').text(videos);
+            $('#totalImages').text(images);
+            $('#totalProjects').text(projects);
+        }
+
+        // Display media
+        function displayMedia() {
+            const filtered = currentFilter === 'all' 
+                ? allMedia 
+                : allMedia.filter(m => m.file_type.includes(currentFilter));
+
+            if (filtered.length === 0) {
+                $('#mediaGrid').hide();
+                $('#emptyState').show();
+                return;
+            }
+
+            $('#emptyState').hide();
+            $('#mediaGrid').show().html('');
+
+            filtered.forEach(media => {
+                const card = createMediaCard(media);
+                $('#mediaGrid').append(card);
+            });
+        }
+
+        // Create media card
+        function createMediaCard(media) {
+            const isVideo = media.file_type.includes('video');
+            const icon = isVideo ? 'fa-video' : 'fa-image';
+            const fileSize = formatFileSize(media.file_size);
+            const date = new Date(media.upload_date).toLocaleDateString();
+
+            return `
+                <div class="media-card">
+                    <div class="media-thumbnail">
+                        ${media.thumbnail_url 
+                            ? `<img src="${media.thumbnail_url}" alt="${media.title}" style="width:100%;height:100%;object-fit:cover;">` 
+                            : `<i class="fas ${icon}"></i>`
+                        }
+                    </div>
+                    <div class="media-info">
+                        <div class="media-title">${media.title}</div>
+                        <div class="media-meta">
+                            <i class="fas fa-calendar"></i> ${date}
+                        </div>
+                        <div class="media-meta">
+                            <i class="fas fa-hdd"></i> ${fileSize}
+                        </div>
+                        ${media.project_name ? `<div class="media-meta"><i class="fas fa-folder"></i> ${media.project_name}</div>` : ''}
+                        <div class="media-actions">
+                            <button class="btn-view" onclick="viewMedia('${media.file_url}')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-download" onclick="downloadMedia('${media.file_url}', '${media.title}')">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (!bytes) return 'Unknown';
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(1024));
+            return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // View media
+        window.viewMedia = function(url) {
+            window.open(url, '_blank');
+        };
+
+        // Download media
+        window.downloadMedia = function(url, filename) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // Filter buttons
+        $('.filter-btn').click(function() {
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+            currentFilter = $(this).data('filter');
+            displayMedia();
+        });
+
+        // Load media on page load
+        loadMedia();
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "precision-sky-solutions",
+  "version": "1.0.0",
+  "description": "Professional drone services website for Precision Sky Solutions",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080 -o",
+    "dev": "node api/server.js"
+  },
+  "keywords": [
+    "drone",
+    "aerial",
+    "photography",
+    "videography",
+    "construction",
+    "weddings",
+    "events"
+  ],
+  "author": "Precision Sky Solutions",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

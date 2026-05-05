@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Login - Precision Sky Solutions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+        }
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .login-header p {
+            color: #666;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(54, 114, 204, 0.1);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-login:hover {
+            background: #2a5ba8;
+            transform: translateY(-2px);
+        }
+        .toggle-form {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        .toggle-form a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1><i class="fas fa-drone"></i> Client Portal</h1>
+                <p>Access your media library</p>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="toggle-form">
+                    Don't have an account? <a href="#" id="showRegister">Register here</a>
+                </div>
+            </form>
+
+            <!-- Register Form (Hidden by default) -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="regFirstName" placeholder="John" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="regLastName" placeholder="Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Company Name (Optional)</label>
+                    <input type="text" id="regCompany" placeholder="Your Company">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                <div class="toggle-form">
+                    Already have an account? <a href="#" id="showLogin">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000/api' : '/api';
+
+        // Toggle between login and register forms
+        $('#showRegister').click(function(e) {
+            e.preventDefault();
+            $('#loginForm').hide();
+            $('#registerForm').show();
+            $('.login-header p').text('Create your account');
+        });
+
+        $('#showLogin').click(function(e) {
+            e.preventDefault();
+            $('#registerForm').hide();
+            $('#loginForm').show();
+            $('.login-header p').text('Access your media library');
+        });
+
+        // Login
+        $('#loginForm').submit(async function(e) {
+            e.preventDefault();
+            
+            const email = $('#loginEmail').val();
+            const password = $('#loginPassword').val();
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'client-dashboard.html';
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                showError('Connection error. Please try again.');
+            }
+        });
+
+        // Register
+        $('#registerForm').submit(async function(e) {
+            e.preventDefault();
+            
+            const firstName = $('#regFirstName').val();
+            const lastName = $('#regLastName').val();
+            const companyName = $('#regCompany').val();
+            const email = $('#regEmail').val();
+            const password = $('#regPassword').val();
+
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ firstName, lastName, companyName, email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'client-dashboard.html';
+                } else {
+                    showError(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                showError('Connection error. Please try again.');
+            }
+        });
+
+        function showError(message) {
+            $('#errorMessage').text(message).show();
+            setTimeout(() => $('#errorMessage').hide(), 5000);
+        }
+
+        function showSuccess(message) {
+            $('#successMessage').text(message).show();
+            setTimeout(() => $('#successMessage').hide(), 5000);
+        }
+    </script>
+</body>
+</html>
