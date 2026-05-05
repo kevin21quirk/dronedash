@@ -1284,13 +1284,15 @@ section {
 .services-image-collage {
     position: relative;
     height: 600px;
+    max-width: 500px;
+    margin-right: 2rem;
 }
 
 .collage-item {
     position: absolute;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transition: var(--transition);
 }
 
@@ -1301,26 +1303,26 @@ section {
 }
 
 .collage-1 {
-    width: 60%;
-    height: 50%;
+    width: 55%;
+    height: 48%;
     top: 0;
     left: 0;
     z-index: 3;
 }
 
 .collage-2 {
-    width: 50%;
-    height: 45%;
-    bottom: 10%;
+    width: 48%;
+    height: 42%;
+    bottom: 12%;
     right: 0;
     z-index: 2;
 }
 
 .collage-3 {
-    width: 45%;
-    height: 40%;
-    top: 40%;
-    left: 30%;
+    width: 42%;
+    height: 38%;
+    top: 42%;
+    right: 8%;
     z-index: 1;
 }
 
