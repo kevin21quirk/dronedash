@@ -13,7 +13,7 @@
             background: #f5f7fa;
         }
         .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #3672cc;
             padding: 1.5rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
@@ -27,6 +27,9 @@
         .dashboard-logo {
             font-size: 1.5rem;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         .user-info {
             display: flex;
@@ -183,7 +186,7 @@
         <div class="dashboard-header">
             <div class="grid-container">
                 <div class="dashboard-logo">
-                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 50px; width: auto; margin-right: 1rem; vertical-align: middle; filter: brightness(0) invert(1);">
+                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 80px; width: auto; filter: brightness(0) invert(1);">
                     <span>Admin Dashboard</span>
                 </div>
                 <div class="user-info">
@@ -198,18 +201,82 @@
 
         <!-- Main Content -->
         <div class="grid-container">
+            <!-- Statistics Cards -->
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="stat-card" style="background: #3672cc; color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(54, 114, 204, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Total Clients</p>
+                            <h2 style="margin: 0.5rem 0 0 0; font-size: 2.5rem;" id="totalClients">0</h2>
+                        </div>
+                        <i class="fas fa-users" style="font-size: 3rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: #27ae60; color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Active Projects</p>
+                            <h2 style="margin: 0.5rem 0 0 0; font-size: 2.5rem;" id="totalProjects">0</h2>
+                        </div>
+                        <i class="fas fa-project-diagram" style="font-size: 3rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: #f39c12; color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Total Media</p>
+                            <h2 style="margin: 0.5rem 0 0 0; font-size: 2.5rem;" id="totalMedia">0</h2>
+                        </div>
+                        <i class="fas fa-photo-video" style="font-size: 3rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+                <div class="stat-card" style="background: #e74c3c; color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">This Month</p>
+                            <h2 style="margin: 0.5rem 0 0 0; font-size: 2.5rem;" id="monthlyClients">0</h2>
+                        </div>
+                        <i class="fas fa-calendar-alt" style="font-size: 3rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+            </div>
+
             <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="clients">
+                <button class="tab-btn active" data-tab="overview">
+                    <i class="fas fa-chart-line"></i> Overview
+                </button>
+                <button class="tab-btn" data-tab="clients">
                     <i class="fas fa-users"></i> Client Management
+                </button>
+                <button class="tab-btn" data-tab="projects">
+                    <i class="fas fa-project-diagram"></i> Projects
                 </button>
                 <button class="tab-btn" data-tab="media">
                     <i class="fas fa-photo-video"></i> Media Library
                 </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
             </div>
 
             <div class="tab-content">
+                <!-- Overview Tab -->
+                <div class="tab-pane active" id="overview-tab">
+                    <h2><i class="fas fa-chart-line"></i> Dashboard Overview</h2>
+                    <div style="margin-top: 2rem;">
+                        <div style="background: #ecf0f1; padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <h3 style="margin-top: 0;"><i class="fas fa-clock"></i> Recent Activity</h3>
+                            <p style="color: #666;">Recent client logins and media uploads will appear here.</p>
+                        </div>
+                        <div style="background: #ecf0f1; padding: 2rem; border-radius: 12px;">
+                            <h3 style="margin-top: 0;"><i class="fas fa-chart-bar"></i> Quick Stats</h3>
+                            <p style="color: #666;">Analytics and usage statistics coming soon.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Clients Tab -->
-                <div class="tab-pane active" id="clients-tab">
+                <div class="tab-pane" id="clients-tab">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                         <h2><i class="fas fa-users"></i> Manage Clients</h2>
                         <button class="btn-primary-custom" id="addClientBtn">
@@ -438,8 +505,40 @@
             setTimeout(() => $('#errorMessage').hide(), 5000);
         }
 
+        // Update statistics
+        function updateStats(clients) {
+            $('#totalClients').text(clients.length);
+            
+            // Count clients from this month
+            const thisMonth = new Date().getMonth();
+            const thisYear = new Date().getFullYear();
+            const monthlyCount = clients.filter(client => {
+                const created = new Date(client.created_at);
+                return created.getMonth() === thisMonth && created.getFullYear() === thisYear;
+            }).length;
+            $('#monthlyClients').text(monthlyCount);
+        }
+
+        // Modified load clients to update stats
+        async function loadClientsWithStats() {
+            try {
+                const response = await fetch(`${API_URL}/clients`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayClients(data.clients);
+                    updateStats(data.clients);
+                }
+            } catch (error) {
+                console.error('Error loading clients:', error);
+            }
+        }
+
         // Load clients on page load
         loadClients();
+        loadClientsWithStats();
     </script>
 </body>
 </html>
