@@ -377,8 +377,12 @@
     <!-- Hero Section with Video Background -->
     <section class="hero-section" id="home">
         <div class="hero-video-container">
-            <iframe id="heroVideo1" class="hero-video active" src="https://player.mux.com/maver7qtAkM1D851kcQFFmj01BcWGYFlrIB8tlSDLHRA?autoplay=true&muted=true&loop=true" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-            <iframe id="heroVideo2" class="hero-video" src="https://player.mux.com/dX66NRSqxh5fUcg561GoAFGyyYTUfUezKLCmztLfq02Q?autoplay=true&muted=true&loop=true" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            <video id="heroVideo1" class="hero-video active" autoplay muted loop playsinline preload="auto">
+                <source src="https://stream.mux.com/maver7qtAkM1D851kcQFFmj01BcWGYFlrIB8tlSDLHRA/high.mp4" type="video/mp4">
+            </video>
+            <video id="heroVideo2" class="hero-video" muted loop playsinline preload="auto">
+                <source src="https://stream.mux.com/dX66NRSqxh5fUcg561GoAFGyyYTUfUezKLCmztLfq02Q/high.mp4" type="video/mp4">
+            </video>
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
