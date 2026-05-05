@@ -284,29 +284,52 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Featured section styling */
 .mega-menu-featured {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 2px solid #e0e0e0;
+    background: rgba(255,255,255,0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .mega-menu-featured h4 {
-    font-size: 1rem;
-    color: var(--text-dark);
-    margin: 0 0 0.75rem 0;
+    font-size: 0.9rem;
+    color: white;
+    margin: 0 0 0.5rem 0;
     font-weight: 700;
 }
 
 .mega-menu-featured p {
-    font-size: 0.85rem;
-    color: #666;
-    line-height: 1.6;
-    margin: 0 0 1rem 0;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+    margin: 0 0 0.75rem 0;
 }
 
 .mega-menu-featured .btn {
-    font-size: 0.85rem;
-    padding: 0.6rem 1.25rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    color: #1e3c72;
+}
+
+.mega-menu-featured .btn:hover {
+    background: #7bb8e8;
+    color: white;
+}
+
+.mega-menu-video {
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.mega-menu-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 150px;
+    object-fit: cover;
 }
 
 .btn-contact {
