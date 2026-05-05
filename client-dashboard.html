@@ -13,10 +13,12 @@
             background: #f5f7fa;
         }
         .dashboard-header {
-            background: white;
-            padding: 1.5rem 0;
+            background: #3672cc;
+            padding: 0.5rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            color: white;
+            overflow: visible;
         }
         .dashboard-header .grid-container {
             display: flex;
@@ -25,8 +27,14 @@
         }
         .dashboard-logo {
             font-size: 1.5rem;
-            color: var(--primary-color);
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .dashboard-logo img {
+            margin-top: -20px;
+            margin-bottom: -20px;
         }
         .user-info {
             display: flex;
@@ -34,15 +42,20 @@
             gap: 1rem;
         }
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
+            background: white;
+            color: #3672cc;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .user-info span {
+            color: white;
+            font-weight: 500;
         }
         .btn-logout {
             background: #e74c3c;
@@ -65,21 +78,36 @@
             background: white;
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
         }
         .stat-card i {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
+            opacity: 0.8;
         }
         .stat-card h3 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin: 0.5rem 0;
             color: var(--text-dark);
+            font-weight: 700;
         }
         .stat-card p {
             color: #666;
             margin: 0;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
         .media-library {
             background: white;
@@ -194,6 +222,78 @@
             font-size: 4rem;
             margin-bottom: 1rem;
         }
+        .client-tabs {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+            display: flex;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        .tab-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        .project-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        .project-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-dark);
+        }
+        .project-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .contact-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .contact-card i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -202,7 +302,7 @@
         <div class="dashboard-header">
             <div class="grid-container">
                 <div class="dashboard-logo">
-                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 45px; width: auto; vertical-align: middle;">
+                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 150px; width: 400px; object-fit: contain; filter: brightness(0) invert(1);">
                 </div>
                 <div class="user-info">
                     <div class="user-avatar" id="userAvatar">PS</div>
@@ -240,25 +340,80 @@
                 </div>
             </div>
 
-            <!-- Media Library -->
-            <div class="media-library">
-                <div class="library-header">
-                    <h2><i class="fas fa-photo-video"></i> Media Library</h2>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="video">Videos</button>
-                        <button class="filter-btn" data-filter="image">Images</button>
+            <!-- Tabs -->
+            <div class="client-tabs">
+                <button class="tab-btn active" data-tab="media">
+                    <i class="fas fa-photo-video"></i> Media Library
+                </button>
+                <button class="tab-btn" data-tab="projects">
+                    <i class="fas fa-project-diagram"></i> My Projects
+                </button>
+                <button class="tab-btn" data-tab="support">
+                    <i class="fas fa-headset"></i> Support
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Media Tab -->
+                <div class="tab-pane active" id="media-tab">
+                    <div class="library-header">
+                        <h2><i class="fas fa-photo-video"></i> Media Library</h2>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="video">Videos</button>
+                            <button class="filter-btn" data-filter="image">Images</button>
+                        </div>
+                    </div>
+
+                    <div id="mediaGrid" class="media-grid">
+                        <!-- Media cards will be loaded here -->
+                    </div>
+
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>No Media Files Yet</h3>
+                        <p>Your media library is empty. Files will appear here once uploaded.</p>
                     </div>
                 </div>
 
-                <div id="mediaGrid" class="media-grid">
-                    <!-- Media cards will be loaded here -->
+                <!-- Projects Tab -->
+                <div class="tab-pane" id="projects-tab">
+                    <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+                    <div id="projectsList" style="margin-top: 2rem;">
+                        <div class="empty-state">
+                            <i class="fas fa-folder-open"></i>
+                            <h3>No Projects Yet</h3>
+                            <p>Your projects will appear here once created.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="emptyState" class="empty-state" style="display: none;">
-                    <i class="fas fa-folder-open"></i>
-                    <h3>No Media Files Yet</h3>
-                    <p>Your media library is empty. Files will appear here once uploaded.</p>
+                <!-- Support Tab -->
+                <div class="tab-pane" id="support-tab">
+                    <h2><i class="fas fa-headset"></i> Support & Contact</h2>
+                    <div style="margin-top: 2rem;">
+                        <div class="contact-card">
+                            <h3><i class="fas fa-envelope"></i> Email Support</h3>
+                            <p>For any questions or support, please email us at:</p>
+                            <p><strong>support@precisionskyso lutions.com</strong></p>
+                        </div>
+                        <div class="contact-card">
+                            <h3><i class="fas fa-phone"></i> Phone Support</h3>
+                            <p>Call us during business hours (Mon-Fri, 9AM-5PM):</p>
+                            <p><strong>+44 (0) 123 456 7890</strong></p>
+                        </div>
+                        <div class="contact-card">
+                            <h3><i class="fas fa-question-circle"></i> FAQ</h3>
+                            <p><strong>How do I download my media?</strong></p>
+                            <p>Click the "Download" button on any media file in your library.</p>
+                            <br>
+                            <p><strong>Can I share my media files?</strong></p>
+                            <p>Yes! Use the "View" button to open the file in a new tab, then share the URL.</p>
+                            <br>
+                            <p><strong>How long are files stored?</strong></p>
+                            <p>Your files are stored securely and permanently unless you request deletion.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -290,6 +445,19 @@
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             window.location.href = 'client-login.html';
+        });
+
+        // Tab switching
+        $('.tab-btn').click(function() {
+            const tab = $(this).data('tab');
+            $('.tab-btn').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-pane').removeClass('active');
+            $(`#${tab}-tab`).addClass('active');
+            
+            if (tab === 'projects') {
+                loadProjects();
+            }
         });
 
         // Load media
