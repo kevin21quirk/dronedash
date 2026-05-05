@@ -4,3 +4,8 @@ node_modules/
 .vercel
 *.log
 .DS_Store
+
+# Large video files (keep locally, don't push to GitHub)
+*.mp4
+*.mov
+*.avi
