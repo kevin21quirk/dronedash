@@ -7,14 +7,39 @@ $(document).ready(function() {
         offset: 100
     });
 
-    // Hero video rotation
+    // Hero video rotation with HLS.js
     const video1 = document.getElementById('heroVideo1');
     const video2 = document.getElementById('heroVideo2');
     let currentVideo = 1;
 
-    // Ensure first video plays
-    if (video1) {
-        video1.play().catch(e => console.log('Video autoplay prevented:', e));
+    // Initialize HLS for video 1
+    if (Hls.isSupported() && video1) {
+        const hls1 = new Hls({
+            enableWorker: true,
+            lowLatencyMode: true,
+            backBufferLength: 90
+        });
+        hls1.loadSource(video1.getAttribute('data-hls'));
+        hls1.attachMedia(video1);
+        hls1.on(Hls.Events.MANIFEST_PARSED, function() {
+            video1.play().catch(e => console.log('Video 1 autoplay prevented:', e));
+        });
+    } else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+        video1.src = video1.getAttribute('data-hls');
+        video1.play().catch(e => console.log('Video 1 autoplay prevented:', e));
+    }
+
+    // Initialize HLS for video 2
+    if (Hls.isSupported() && video2) {
+        const hls2 = new Hls({
+            enableWorker: true,
+            lowLatencyMode: true,
+            backBufferLength: 90
+        });
+        hls2.loadSource(video2.getAttribute('data-hls'));
+        hls2.attachMedia(video2);
+    } else if (video2.canPlayType('application/vnd.apple.mpegurl')) {
+        video2.src = video2.getAttribute('data-hls');
     }
 
     function switchVideo() {
