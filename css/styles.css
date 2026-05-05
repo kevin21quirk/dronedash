@@ -1245,8 +1245,10 @@ section {
 
 .page-hero {
     position: relative;
-    height: 60vh;
-    min-height: 400px;
+    height: 70vh;
+    min-height: 500px;
+    margin-top: 0;
+    padding-top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;

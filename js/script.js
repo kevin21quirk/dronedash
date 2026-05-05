@@ -12,52 +12,59 @@ $(document).ready(function() {
     const video2 = document.getElementById('heroVideo2');
     let currentVideo = 1;
 
-    // Initialize HLS for video 1
-    if (Hls.isSupported() && video1) {
-        const hls1 = new Hls({
-            enableWorker: true,
-            lowLatencyMode: true,
-            backBufferLength: 90
-        });
-        hls1.loadSource(video1.getAttribute('data-hls'));
-        hls1.attachMedia(video1);
-        hls1.on(Hls.Events.MANIFEST_PARSED, function() {
+    // Initialize HLS for video 1 (only if video element exists)
+    if (video1 && typeof Hls !== 'undefined') {
+        if (Hls.isSupported()) {
+            const hls1 = new Hls({
+                enableWorker: true,
+                lowLatencyMode: true,
+                backBufferLength: 90
+            });
+            hls1.loadSource(video1.getAttribute('data-hls'));
+            hls1.attachMedia(video1);
+            hls1.on(Hls.Events.MANIFEST_PARSED, function() {
+                video1.play().catch(e => console.log('Video 1 autoplay prevented:', e));
+            });
+        } else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
+            video1.src = video1.getAttribute('data-hls');
             video1.play().catch(e => console.log('Video 1 autoplay prevented:', e));
-        });
-    } else if (video1.canPlayType('application/vnd.apple.mpegurl')) {
-        video1.src = video1.getAttribute('data-hls');
-        video1.play().catch(e => console.log('Video 1 autoplay prevented:', e));
+        }
     }
 
-    // Initialize HLS for video 2
-    if (Hls.isSupported() && video2) {
-        const hls2 = new Hls({
-            enableWorker: true,
-            lowLatencyMode: true,
-            backBufferLength: 90
-        });
-        hls2.loadSource(video2.getAttribute('data-hls'));
-        hls2.attachMedia(video2);
-    } else if (video2.canPlayType('application/vnd.apple.mpegurl')) {
-        video2.src = video2.getAttribute('data-hls');
+    // Initialize HLS for video 2 (only if video element exists)
+    if (video2 && typeof Hls !== 'undefined') {
+        if (Hls.isSupported()) {
+            const hls2 = new Hls({
+                enableWorker: true,
+                lowLatencyMode: true,
+                backBufferLength: 90
+            });
+            hls2.loadSource(video2.getAttribute('data-hls'));
+            hls2.attachMedia(video2);
+        } else if (video2.canPlayType('application/vnd.apple.mpegurl')) {
+            video2.src = video2.getAttribute('data-hls');
+        }
     }
 
     function switchVideo() {
+        if (!video1 || !video2) return;
         if (currentVideo === 1) {
             video1.classList.remove('active');
             video2.classList.add('active');
-            if (video2) video2.play();
+            video2.play();
             currentVideo = 2;
         } else {
             video2.classList.remove('active');
             video1.classList.add('active');
-            if (video1) video1.play();
+            video1.play();
             currentVideo = 1;
         }
     }
 
-    // Switch videos every 8 seconds
-    setInterval(switchVideo, 8000);
+    // Switch videos every 8 seconds (only if both videos exist)
+    if (video1 && video2) {
+        setInterval(switchVideo, 8000);
+    }
 
     $('.btn-contact, #getQuoteBtn').click(function(e) {
         if ($(this).hasClass('btn-contact') || $(this).attr('id') === 'getQuoteBtn') {
