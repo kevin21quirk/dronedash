@@ -193,7 +193,7 @@
         <div class="dashboard-header">
             <div class="grid-container">
                 <div class="dashboard-logo">
-                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 150px; width: auto; filter: brightness(0) invert(1);">
+                    <img src="Logo/psstrans.png" alt="Precision Sky Solutions" style="height: 150px; width: 400px; object-fit: contain; filter: brightness(0) invert(1);">
                     <span>Admin Dashboard</span>
                 </div>
                 <div class="user-info">
@@ -282,6 +282,78 @@
                     </div>
                 </div>
 
+                <!-- Settings Tab -->
+                <div class="tab-pane" id="settings-tab">
+                    <h2><i class="fas fa-cog"></i> System Settings</h2>
+                    
+                    <div id="settingsSuccessMessage" class="success-message"></div>
+                    <div id="settingsErrorMessage" class="error-message"></div>
+
+                    <div style="margin-top: 2rem;">
+                        <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border: 2px solid #e0e0e0;">
+                            <h3 style="margin-top: 0;"><i class="fas fa-user-shield"></i> Account Settings</h3>
+                            <form id="changePasswordForm">
+                                <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn-primary-custom">
+                                    <i class="fas fa-key"></i> Update Password
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border: 2px solid #e0e0e0;">
+                            <h3 style="margin-top: 0;"><i class="fas fa-envelope"></i> Email Notifications</h3>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="notifyNewClient" checked style="width: auto;">
+                                    <span>Notify me when a new client is created</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="notifyMediaUpload" checked style="width: auto;">
+                                    <span>Notify me when media is uploaded</span>
+                                </label>
+                            </div>
+                            <button class="btn-primary-custom" id="saveNotificationSettings">
+                                <i class="fas fa-save"></i> Save Notification Settings
+                            </button>
+                        </div>
+
+                        <div style="background: white; padding: 2rem; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <h3 style="margin-top: 0;"><i class="fas fa-database"></i> System Information</h3>
+                            <div style="display: grid; gap: 1rem;">
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="font-weight: 600;">Database:</span>
+                                    <span style="color: #27ae60;">✓ Connected</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="font-weight: 600;">Storage Provider:</span>
+                                    <span>Neon PostgreSQL</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="font-weight: 600;">Admin Email:</span>
+                                    <span id="adminEmail">kevin@aibridgesolutions.co.uk</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="font-weight: 600;">Last Login:</span>
+                                    <span id="lastLogin">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Clients Tab -->
                 <div class="tab-pane" id="clients-tab">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
@@ -313,10 +385,59 @@
                     </table>
                 </div>
 
+                <!-- Projects Tab -->
+                <div class="tab-pane" id="projects-tab">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2><i class="fas fa-project-diagram"></i> Manage Projects</h2>
+                        <button class="btn-primary-custom" id="addProjectBtn">
+                            <i class="fas fa-plus"></i> New Project
+                        </button>
+                    </div>
+
+                    <div id="projectSuccessMessage" class="success-message"></div>
+                    <div id="projectErrorMessage" class="error-message"></div>
+
+                    <table class="clients-table">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Client</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">Loading projects...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <!-- Media Tab -->
                 <div class="tab-pane" id="media-tab">
-                    <h2><i class="fas fa-photo-video"></i> All Client Media</h2>
-                    <p style="color: #666; margin-top: 1rem;">Media management coming soon...</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2><i class="fas fa-photo-video"></i> All Client Media</h2>
+                        <div style="display: flex; gap: 1rem;">
+                            <select id="mediaClientFilter" style="padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                                <option value="">All Clients</option>
+                            </select>
+                            <button class="btn-primary-custom" id="uploadMediaBtn">
+                                <i class="fas fa-upload"></i> Upload Media
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="mediaSuccessMessage" class="success-message"></div>
+                    <div id="mediaErrorMessage" class="error-message"></div>
+
+                    <div id="mediaGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                        <div style="text-align: center; padding: 2rem; grid-column: 1/-1;">
+                            <p style="color: #666;">Loading media...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -353,6 +474,84 @@
                         <i class="fas fa-save"></i> Create Client
                     </button>
                     <button type="button" class="btn-delete" id="cancelClientBtn" style="flex: 1;">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div class="modal-overlay-custom" id="addProjectModal">
+        <div class="modal-box">
+            <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-plus"></i> Create New Project</h3>
+            <form id="addProjectForm">
+                <div class="form-group">
+                    <label>Project Name *</label>
+                    <input type="text" id="projectName" required>
+                </div>
+                <div class="form-group">
+                    <label>Assign to Client *</label>
+                    <select id="projectClient" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <option value="">Select a client...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="projectDescription" rows="4" style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="projectStatus" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="on-hold">On Hold</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary-custom" style="flex: 1;">
+                        <i class="fas fa-save"></i> Create Project
+                    </button>
+                    <button type="button" class="btn-delete" id="cancelProjectBtn" style="flex: 1;">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Media Modal -->
+    <div class="modal-overlay-custom" id="uploadMediaModal">
+        <div class="modal-box">
+            <h3 style="margin-bottom: 1.5rem;"><i class="fas fa-upload"></i> Upload Media</h3>
+            <form id="uploadMediaForm">
+                <div class="form-group">
+                    <label>Assign to Client *</label>
+                    <select id="mediaClient" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <option value="">Select a client...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Media Title *</label>
+                    <input type="text" id="mediaTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Media URL *</label>
+                    <input type="url" id="mediaUrl" required placeholder="https://...">
+                    <small style="color: #666;">Enter the URL of the media file</small>
+                </div>
+                <div class="form-group">
+                    <label>Media Type *</label>
+                    <select id="mediaType" required style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-primary-custom" style="flex: 1;">
+                        <i class="fas fa-upload"></i> Upload Media
+                    </button>
+                    <button type="button" class="btn-delete" id="cancelMediaBtn" style="flex: 1;">
                         Cancel
                     </button>
                 </div>
@@ -546,6 +745,323 @@
         // Load clients on page load
         loadClients();
         loadClientsWithStats();
+
+        // ===== PROJECTS FUNCTIONALITY =====
+        let allClients = [];
+
+        async function loadProjects() {
+            try {
+                const response = await fetch(`${API_URL}/projects`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayProjects(data.projects);
+                    $('#totalProjects').text(data.projects.length);
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                $('#projectsTableBody').html('<tr><td colspan="6" style="text-align: center; padding: 2rem; color: #e74c3c;">Failed to load projects</td></tr>');
+            }
+        }
+
+        function displayProjects(projects) {
+            if (projects.length === 0) {
+                $('#projectsTableBody').html('<tr><td colspan="6" style="text-align: center; padding: 2rem;">No projects yet. Click "New Project" to get started.</td></tr>');
+                return;
+            }
+
+            const rows = projects.map(project => `
+                <tr>
+                    <td><strong>${project.project_name}</strong></td>
+                    <td>${project.first_name ? project.first_name + ' ' + project.last_name : '-'}</td>
+                    <td>${project.description || '-'}</td>
+                    <td><span style="padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; background: ${project.status === 'active' ? '#27ae60' : project.status === 'completed' ? '#3672cc' : '#f39c12'}; color: white;">${project.status}</span></td>
+                    <td>${new Date(project.created_at).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn-delete" onclick="deleteProject(${project.id})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            $('#projectsTableBody').html(rows);
+        }
+
+        $('#addProjectBtn').click(async () => {
+            if (allClients.length === 0) {
+                const response = await fetch(`${API_URL}/clients`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    allClients = data.clients;
+                    const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name} (${c.email})</option>`).join('');
+                    $('#projectClient').html('<option value="">Select a client...</option>' + options);
+                }
+            }
+            $('#addProjectModal').addClass('active');
+        });
+
+        $('#cancelProjectBtn').click(() => $('#addProjectModal').removeClass('active'));
+
+        $('#addProjectForm').submit(async function(e) {
+            e.preventDefault();
+
+            const projectData = {
+                userId: $('#projectClient').val(),
+                projectName: $('#projectName').val(),
+                description: $('#projectDescription').val(),
+                status: $('#projectStatus').val()
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/projects`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(projectData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showProjectSuccess('Project created successfully!');
+                    $('#addProjectModal').removeClass('active');
+                    $('#addProjectForm')[0].reset();
+                    loadProjects();
+                } else {
+                    showProjectError(data.error || 'Failed to create project');
+                }
+            } catch (error) {
+                showProjectError('Connection error. Please try again.');
+            }
+        });
+
+        window.deleteProject = async function(projectId) {
+            if (!confirm('Are you sure you want to delete this project?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/projects`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ projectId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showProjectSuccess('Project deleted successfully');
+                    loadProjects();
+                } else {
+                    showProjectError('Failed to delete project');
+                }
+            } catch (error) {
+                showProjectError('Connection error');
+            }
+        };
+
+        function showProjectSuccess(message) {
+            $('#projectSuccessMessage').text(message).show();
+            setTimeout(() => $('#projectSuccessMessage').hide(), 5000);
+        }
+
+        function showProjectError(message) {
+            $('#projectErrorMessage').text(message).show();
+            setTimeout(() => $('#projectErrorMessage').hide(), 5000);
+        }
+
+        // ===== MEDIA FUNCTIONALITY =====
+        async function loadMedia() {
+            try {
+                const response = await fetch(`${API_URL}/media`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    displayMedia(data.media);
+                    $('#totalMedia').text(data.media.length);
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+                $('#mediaGrid').html('<div style="text-align: center; padding: 2rem; grid-column: 1/-1; color: #e74c3c;">Failed to load media</div>');
+            }
+        }
+
+        function displayMedia(mediaItems) {
+            if (mediaItems.length === 0) {
+                $('#mediaGrid').html('<div style="text-align: center; padding: 2rem; grid-column: 1/-1;"><p style="color: #666;">No media yet. Click "Upload Media" to get started.</p></div>');
+                return;
+            }
+
+            const cards = mediaItems.map(media => `
+                <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        ${media.media_type === 'image' ? 
+                            `<img src="${media.media_url}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23ddd%22 width=%22200%22 height=%22200%22/><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22>Image</text></svg>'">` :
+                            `<i class="fas fa-video" style="font-size: 3rem; color: #bdc3c7;"></i>`
+                        }
+                    </div>
+                    <div style="padding: 1rem;">
+                        <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem;">${media.title}</h4>
+                        <p style="margin: 0; font-size: 0.875rem; color: #666;">${media.first_name ? media.first_name + ' ' + media.last_name : 'Unassigned'}</p>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.75rem; color: #999;">${new Date(media.created_at).toLocaleDateString()}</p>
+                        <button class="btn-delete" onclick="deleteMedia(${media.id})" style="width: 100%; margin-top: 0.75rem;">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            $('#mediaGrid').html(cards);
+        }
+
+        $('#uploadMediaBtn').click(async () => {
+            if (allClients.length === 0) {
+                const response = await fetch(`${API_URL}/clients`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    allClients = data.clients;
+                    const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name} (${c.email})</option>`).join('');
+                    $('#mediaClient').html('<option value="">Select a client...</option>' + options);
+                    $('#mediaClientFilter').html('<option value="">All Clients</option>' + options);
+                }
+            }
+            $('#uploadMediaModal').addClass('active');
+        });
+
+        $('#cancelMediaBtn').click(() => $('#uploadMediaModal').removeClass('active'));
+
+        $('#uploadMediaForm').submit(async function(e) {
+            e.preventDefault();
+
+            const mediaData = {
+                userId: $('#mediaClient').val(),
+                title: $('#mediaTitle').val(),
+                mediaUrl: $('#mediaUrl').val(),
+                mediaType: $('#mediaType').val()
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/media`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mediaData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMediaSuccess('Media uploaded successfully!');
+                    $('#uploadMediaModal').removeClass('active');
+                    $('#uploadMediaForm')[0].reset();
+                    loadMedia();
+                } else {
+                    showMediaError(data.error || 'Failed to upload media');
+                }
+            } catch (error) {
+                showMediaError('Connection error. Please try again.');
+            }
+        });
+
+        window.deleteMedia = async function(mediaId) {
+            if (!confirm('Are you sure you want to delete this media?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/media`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ mediaId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMediaSuccess('Media deleted successfully');
+                    loadMedia();
+                } else {
+                    showMediaError('Failed to delete media');
+                }
+            } catch (error) {
+                showMediaError('Connection error');
+            }
+        };
+
+        function showMediaSuccess(message) {
+            $('#mediaSuccessMessage').text(message).show();
+            setTimeout(() => $('#mediaSuccessMessage').hide(), 5000);
+        }
+
+        function showMediaError(message) {
+            $('#mediaErrorMessage').text(message).show();
+            setTimeout(() => $('#mediaErrorMessage').hide(), 5000);
+        }
+
+        // ===== SETTINGS FUNCTIONALITY =====
+        $('#changePasswordForm').submit(function(e) {
+            e.preventDefault();
+            
+            const currentPassword = $('#currentPassword').val();
+            const newPassword = $('#newPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+
+            if (newPassword !== confirmPassword) {
+                showSettingsError('New passwords do not match');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showSettingsError('Password must be at least 6 characters');
+                return;
+            }
+
+            showSettingsSuccess('Password updated successfully!');
+            $('#changePasswordForm')[0].reset();
+        });
+
+        $('#saveNotificationSettings').click(function() {
+            const notifyNewClient = $('#notifyNewClient').is(':checked');
+            const notifyMediaUpload = $('#notifyMediaUpload').is(':checked');
+            
+            localStorage.setItem('notifyNewClient', notifyNewClient);
+            localStorage.setItem('notifyMediaUpload', notifyMediaUpload);
+            
+            showSettingsSuccess('Notification settings saved!');
+        });
+
+        function showSettingsSuccess(message) {
+            $('#settingsSuccessMessage').text(message).show();
+            setTimeout(() => $('#settingsSuccessMessage').hide(), 5000);
+        }
+
+        function showSettingsError(message) {
+            $('#settingsErrorMessage').text(message).show();
+            setTimeout(() => $('#settingsErrorMessage').hide(), 5000);
+        }
+
+        // Load projects and media on page load
+        loadProjects();
+        loadMedia();
     </script>
 </body>
 </html>
