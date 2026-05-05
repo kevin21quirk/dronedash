@@ -8,28 +8,24 @@ $(document).ready(function() {
     });
 
     // Hero video rotation
-    const video1 = document.getElementById('heroVideo1');
-    const video2 = document.getElementById('heroVideo2');
+    const iframe1 = document.getElementById('heroVideo1');
+    const iframe2 = document.getElementById('heroVideo2');
     let currentVideo = 1;
 
     function switchVideo() {
         if (currentVideo === 1) {
-            video1.classList.remove('active');
-            video2.classList.add('active');
-            video2.currentTime = 0;
-            video2.play();
+            iframe1.classList.remove('active');
+            iframe2.classList.add('active');
             currentVideo = 2;
         } else {
-            video2.classList.remove('active');
-            video1.classList.add('active');
-            video1.currentTime = 0;
-            video1.play();
+            iframe2.classList.remove('active');
+            iframe1.classList.add('active');
             currentVideo = 1;
         }
     }
 
-    // Switch videos every 5 seconds
-    setInterval(switchVideo, 5000);
+    // Switch videos every 8 seconds (give more time to watch)
+    setInterval(switchVideo, 8000);
 
     $('.btn-contact, #getQuoteBtn').click(function(e) {
         if ($(this).hasClass('btn-contact') || $(this).attr('id') === 'getQuoteBtn') {
