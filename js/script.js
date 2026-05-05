@@ -222,9 +222,10 @@ $(document).ready(function() {
             const statsSection = $('.stats-section');
             if (statsSection.length) {
                 const statsTop = statsSection.offset().top;
-                const scrollPos = $(window).scrollTop() + $(window).height();
+                const windowBottom = $(window).scrollTop() + $(window).height();
                 
-                if (scrollPos > statsTop + 100) {
+                // Trigger when stats section is 50% visible
+                if (windowBottom > statsTop + (statsSection.outerHeight() / 2)) {
                     animateStats();
                     statsAnimated = true;
                 }
@@ -234,8 +235,14 @@ $(document).ready(function() {
 
     $(window).scroll(checkStats);
     
-    // Check on page load in case stats are already visible
-    setTimeout(checkStats, 500);
+    // Check on page load and after a delay
+    $(window).on('load', function() {
+        setTimeout(checkStats, 100);
+        setTimeout(checkStats, 1000);
+    });
+    
+    // Also check after DOM is ready
+    setTimeout(checkStats, 100);
 
     $('.portfolio-item').hover(
         function() {
