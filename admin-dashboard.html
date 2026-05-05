@@ -808,7 +808,7 @@
                 const data = await response.json();
                 if (data.success) {
                     allClients = data.clients;
-                    const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name} (${c.email})</option>`).join('');
+                    const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`).join('');
                     $('#projectClient').html('<option value="">Select a client...</option>' + options);
                 }
             }
