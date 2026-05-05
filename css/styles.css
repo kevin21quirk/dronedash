@@ -176,6 +176,15 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
 }
 
+/* 2-column grid for About menu */
+.mega-menu-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.mega-menu-about {
+    width: 600px;
+}
+
 .btn-contact {
     background: var(--primary-color);
     padding: 0.75rem 1.5rem !important;
@@ -2590,6 +2599,11 @@ section {
     
     .nav-menu li:last-child {
         border-bottom: none;
+    }
+    
+    /* Hide mega menu on mobile */
+    .mega-menu {
+        display: none !important;
     }
     
     /* Buttons mobile */
