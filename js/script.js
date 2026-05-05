@@ -217,21 +217,25 @@ $(document).ready(function() {
         });
     }
 
-    $(window).scroll(function() {
+    function checkStats() {
         if (!statsAnimated) {
             const statsSection = $('.stats-section');
             if (statsSection.length) {
                 const statsTop = statsSection.offset().top;
-                const statsBottom = statsTop + statsSection.outerHeight();
                 const scrollPos = $(window).scrollTop() + $(window).height();
                 
-                if (scrollPos > statsTop && $(window).scrollTop() < statsBottom) {
+                if (scrollPos > statsTop + 100) {
                     animateStats();
                     statsAnimated = true;
                 }
             }
         }
-    });
+    }
+
+    $(window).scroll(checkStats);
+    
+    // Check on page load in case stats are already visible
+    setTimeout(checkStats, 500);
 
     $('.portfolio-item').hover(
         function() {
