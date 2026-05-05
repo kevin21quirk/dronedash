@@ -159,7 +159,7 @@ $(document).ready(function() {
     $('.nav-link').click(function(e) {
         const href = $(this).attr('href');
         
-        if (href.startsWith('#')) {
+        if (href && href.startsWith('#') && href.length > 1) {
             e.preventDefault();
             const target = $(href);
             
@@ -183,7 +183,7 @@ $(document).ready(function() {
         
         $('.nav-link').each(function() {
             const href = $(this).attr('href');
-            if (href.startsWith('#')) {
+            if (href && href.startsWith('#') && href.length > 1) {
                 const target = $(href);
                 if (target.length) {
                     if (target.offset().top <= scrollPos && target.offset().top + target.outerHeight() > scrollPos) {
