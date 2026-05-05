@@ -45,16 +45,19 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-.logo h1 {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--secondary-color);
-    margin: 0;
-    letter-spacing: -0.5px;
+.logo-image {
+    height: 50px;
+    width: auto;
+    display: block;
+    transition: var(--transition);
 }
 
-.logo h1 span {
-    color: var(--primary-color);
+.logo-image:hover {
+    transform: scale(1.05);
+}
+
+.main-nav.scrolled .logo-image {
+    height: 45px;
 }
 
 .nav-menu {
