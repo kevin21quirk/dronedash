@@ -167,15 +167,18 @@
         }
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
+            max-width: none;
             padding: 0.75rem;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 1rem;
             font-family: inherit;
+            box-sizing: border-box;
         }
         
         .form-group select {
             cursor: pointer;
+            min-width: 100%;
         }
         
         .form-group select option {
@@ -503,7 +506,7 @@
                 <div class="form-group">
                     <label>Assign to Client *</label>
                     <select id="projectClient" required>
-                        <option value="">Select a client...</option>
+                        <option value="">Select Client</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -538,7 +541,7 @@
                 <div class="form-group">
                     <label>Assign to Client *</label>
                     <select id="mediaClient" required>
-                        <option value="">Select a client...</option>
+                        <option value="">Select Client</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -809,7 +812,7 @@
                 if (data.success) {
                     allClients = data.clients;
                     const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`).join('');
-                    $('#projectClient').html('<option value="">Select a client...</option>' + options);
+                    $('#projectClient').html('<option value="">Select Client</option>' + options);
                 }
             }
             $('#addProjectModal').addClass('active');
@@ -945,7 +948,7 @@
                 if (data.success) {
                     allClients = data.clients;
                     const options = allClients.map(c => `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`).join('');
-                    $('#mediaClient').html('<option value="">Select a client...</option>' + options);
+                    $('#mediaClient').html('<option value="">Select Client</option>' + options);
                     $('#mediaClientFilter').html('<option value="">All Clients</option>' + options);
                 }
             }
