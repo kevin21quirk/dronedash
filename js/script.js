@@ -230,18 +230,7 @@ $(document).ready(function() {
         this.reset();
     });
 
-    let lastScroll = 0;
-    $(window).scroll(function() {
-        const currentScroll = $(window).scrollTop();
-        
-        if (currentScroll > lastScroll && currentScroll > 500) {
-            nav.css('transform', 'translateY(-100%)');
-        } else {
-            nav.css('transform', 'translateY(0)');
-        }
-        
-        lastScroll = currentScroll;
-    });
+    // Navigation stays visible at all times (removed hide-on-scroll behavior)
 
     $('.service-item, .portfolio-item, .industry-block').each(function(index) {
         $(this).css('animation-delay', (index * 0.1) + 's');
