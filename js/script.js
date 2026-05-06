@@ -79,18 +79,58 @@ $(document).ready(function() {
             
             $('#quoteModal').addClass('active');
             $('body').css('overflow', 'hidden');
+            initModalVideo();
         }
     });
+
+    const MUX_PLAYBACK_ID = 'maver7qtAkM1D851kcQFFmj01BcWGYFlrIB8tlSDLHRA';
+    let modalHls = null;
+
+    function initModalVideo() {
+        const overlay = document.querySelector('#quoteModal .modal-overlay');
+        if (!overlay) return;
+        let video = overlay.querySelector('.modal-bg-video');
+        if (!video) {
+            video = document.createElement('video');
+            video.className = 'modal-bg-video';
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.autoplay = true;
+            overlay.insertBefore(video, overlay.firstChild);
+        }
+        const src = `https://stream.mux.com/${MUX_PLAYBACK_ID}.m3u8`;
+        if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+            if (modalHls) { modalHls.destroy(); modalHls = null; }
+            modalHls = new Hls();
+            modalHls.loadSource(src);
+            modalHls.attachMedia(video);
+            modalHls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play().catch(function(){});
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = src;
+            video.play().catch(function(){});
+        }
+    }
+
+    function destroyModalVideo() {
+        if (modalHls) { modalHls.destroy(); modalHls = null; }
+        const video = document.querySelector('#quoteModal .modal-bg-video');
+        if (video) { try { video.pause(); } catch(e){} video.remove(); }
+    }
 
     $('#closeModal').click(function(e) {
         $('#quoteModal').removeClass('active');
         $('body').css('overflow', 'auto');
+        destroyModalVideo();
     });
 
     $('.quote-modal .modal-overlay').click(function(e) {
         if (e.target === this) {
             $('#quoteModal').removeClass('active');
             $('body').css('overflow', 'auto');
+            destroyModalVideo();
         }
     });
 
