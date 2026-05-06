@@ -2074,25 +2074,22 @@ section {
 }
 
 /* Scroll offset for fixed nav when jumping to anchors */
-.service-block,
-.industry-detail-title,
-.service-detail-title,
+:target,
 section[id],
-[id="team"],
-[id="equipment"],
-[id="certifications"],
-[id="commercial"],
-[id="weddings"],
-[id="construction"],
-[id="cinematic"],
-[id="mapping"],
-[id="thermal"],
-[id="real-estate"],
-[id="events"],
-[id="agriculture"],
-[id="infrastructure"],
-[id="media"] {
-    scroll-margin-top: 120px;
+.service-block[id],
+.service-detail-title[id],
+.industry-detail-title[id] {
+    scroll-margin-top: 180px;
+}
+
+@media screen and (max-width: 768px) {
+    :target,
+    section[id],
+    .service-block[id],
+    .service-detail-title[id],
+    .industry-detail-title[id] {
+        scroll-margin-top: 120px;
+    }
 }
 
 .quote-modal,
