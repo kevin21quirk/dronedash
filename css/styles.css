@@ -2073,6 +2073,215 @@ section {
     }
 }
 
+/* ========================================
+   PSS PREMIUM EFFECTS
+   ======================================== */
+
+/* 1. PAGE LOADER */
+.pss-loader {
+    position: fixed;
+    inset: 0;
+    background: #0a0e1a;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.pss-loader.done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.pss-loader-inner {
+    text-align: center;
+    color: #fff;
+}
+.pss-loader-drone {
+    width: 140px;
+    height: 140px;
+    animation: pssLoaderHover 2s ease-in-out infinite;
+}
+.pss-loader-drone .prop {
+    fill: #3672cc;
+    opacity: 0.85;
+    transform-origin: center;
+    animation: pssPropSpin 0.4s linear infinite;
+}
+.pss-loader-drone .prop-tl,
+.pss-loader-drone .prop-br { transform-box: fill-box; }
+.pss-loader-drone .arm {
+    stroke: #5a9fd4;
+    stroke-width: 6;
+    stroke-linecap: round;
+}
+.pss-loader-drone .body {
+    fill: #2a5ba8;
+    stroke: #5a9fd4;
+    stroke-width: 2;
+}
+@keyframes pssPropSpin {
+    to { transform: rotate(360deg); }
+}
+@keyframes pssLoaderHover {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+.pss-loader-text {
+    font-family: 'Saira Stencil One', sans-serif;
+    letter-spacing: 4px;
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+    color: #fff;
+    opacity: 0.85;
+}
+.pss-loader-bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.pss-loader-bar span {
+    display: block;
+    height: 100%;
+    background: #3672cc;
+    animation: pssLoaderFill 1.4s ease-out forwards;
+}
+@keyframes pssLoaderFill {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* 2. CUSTOM CURSOR */
+@media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    a, button, .btn, input, select, textarea, .nav-link, .filter-btn { cursor: none; }
+}
+.pss-cursor-dot,
+.pss-cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 100000;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+}
+.pss-cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #3672cc;
+    border-radius: 50%;
+    margin: -3px 0 0 -3px;
+}
+.pss-cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid rgba(54, 114, 204, 0.6);
+    border-radius: 50%;
+    margin: -18px 0 0 -18px;
+    transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.3s ease;
+    backdrop-filter: invert(0%);
+}
+.pss-cursor-ring.hover {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    background: rgba(54, 114, 204, 0.12);
+    border-color: rgba(54, 114, 204, 0.9);
+}
+.pss-cursor-ring.click {
+    transform: translate3d(var(--cx), var(--cy), 0) scale(0.85);
+}
+@media (hover: none), (pointer: coarse) {
+    .pss-cursor-dot, .pss-cursor-ring { display: none; }
+    body { cursor: auto; }
+}
+
+/* 4. MAGNETIC BUTTONS smoothing */
+.btn-primary,
+.btn-secondary,
+.btn-large,
+.filter-btn {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 5. MARQUEE STRIP */
+.pss-marquee {
+    overflow: hidden;
+    background: linear-gradient(90deg, #0a0e1a 0%, #14213d 50%, #0a0e1a 100%);
+    padding: 1.75rem 0;
+    border-top: 1px solid rgba(54, 114, 204, 0.25);
+    border-bottom: 1px solid rgba(54, 114, 204, 0.25);
+}
+.pss-marquee-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 2.5rem;
+    white-space: nowrap;
+    animation: pssMarquee 40s linear infinite;
+    padding-left: 100%;
+}
+@keyframes pssMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+.pss-marquee-item {
+    font-family: 'Saira Stencil One', 'Black Ops One', sans-serif;
+    color: #fff;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+.pss-marquee-dot {
+    color: #3672cc;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+}
+.pss-marquee:hover .pss-marquee-track {
+    animation-play-state: paused;
+}
+
+/* 6. NUMBER COUNTERS - already styled, just transition */
+.stat-number {
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+
+/* 7. PARALLAX images */
+.service-detail-image,
+.industry-detail-image-large {
+    overflow: hidden;
+}
+.service-detail-image img,
+.industry-detail-image-large img {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* 8. CHARACTER-STAGGER TEXT REVEAL */
+.hero-title[data-split],
+.page-hero-title[data-split],
+.section-title[data-split],
+.cta-title[data-split] {
+    overflow: hidden;
+}
+.split-word {
+    display: inline-block;
+    white-space: nowrap;
+}
+.split-char {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+}
+.split-in .split-char {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 /* Scroll offset for fixed nav when jumping to anchors */
 :target,
 section[id],
