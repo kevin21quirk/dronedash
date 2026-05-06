@@ -2142,8 +2142,9 @@ section {
     content: '';
     position: absolute;
     left: 0; right: 0; top: -1px;
-    height: 90px;
-    transform: translateY(-99%);
+    height: 70px;
+    transform: translateY(-50%);
+    z-index: 1;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'><path d='M0,60 C360,10 1080,90 1440,40 L1440,90 L0,90 Z' fill='%233672cc'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -2354,9 +2355,9 @@ section {
     animation: pssCurveFloatTop 12s ease-in-out infinite alternate;
 }
 @keyframes pssCurveFloatTop {
-    0% { transform: translateY(-99%) scaleX(1); }
-    50% { transform: translateY(-99%) scaleX(1.04); }
-    100% { transform: translateY(-99%) scaleX(1); }
+    0% { transform: translateY(-50%) scaleX(1); }
+    50% { transform: translateY(-50%) scaleX(1.04); }
+    100% { transform: translateY(-50%) scaleX(1); }
 }
 
 /* Mobile: smaller curves */
@@ -2514,9 +2515,11 @@ section {
 .pss-marquee {
     overflow: hidden;
     background: linear-gradient(90deg, #0a0e1a 0%, #14213d 50%, #0a0e1a 100%);
-    padding: 1.75rem 0;
+    padding: 1.75rem 0 5rem;
     border-top: 1px solid rgba(54, 114, 204, 0.25);
     border-bottom: 1px solid rgba(54, 114, 204, 0.25);
+    position: relative;
+    z-index: 2;
 }
 .pss-marquee-track {
     display: inline-flex;
