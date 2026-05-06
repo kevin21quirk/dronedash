@@ -2419,16 +2419,20 @@ section {
 
 .quote-form input,
 .quote-form select,
-.quote-form textarea {
+.quote-form textarea,
+.quote-form select option {
     width: 100%;
     padding: 0.9rem 1.2rem;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
     transition: var(--transition);
     background: var(--secondary-color);
     color: var(--text-dark);
+    line-height: 1.4;
 }
 
 .quote-form input::placeholder,
