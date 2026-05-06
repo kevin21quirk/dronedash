@@ -2124,13 +2124,13 @@ section {
 /* === AUTO-CURVES via pseudo-elements === */
 /* Wave SVG fills - color encoded in the URL */
 
-/* Bottom of hero → curving into white below */
+/* Bottom of hero → curving into #f8f9fa (why-choose) */
 .hero-section::after {
     content: '';
     position: absolute;
     left: 0; right: 0; bottom: -1px;
     height: 110px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110' preserveAspectRatio='none'><path d='M0,40 C220,110 480,0 720,50 C960,100 1200,20 1440,60 L1440,110 L0,110 Z' fill='%23ffffff'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110' preserveAspectRatio='none'><path d='M0,40 C220,110 480,0 720,50 C960,100 1200,20 1440,60 L1440,110 L0,110 Z' fill='%23f8f9fa'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     z-index: 4;
@@ -2163,13 +2163,13 @@ section {
     z-index: 1;
 }
 
-/* Bottom of CTA section → curving into dark footer */
+/* Bottom of CTA section → curving into dark footer (#000000) */
 .cta-section::after {
     content: '';
     position: absolute;
     left: 0; right: 0; bottom: -1px;
     height: 110px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110' preserveAspectRatio='none'><path d='M0,80 C300,20 600,90 900,50 C1140,18 1320,80 1440,40 L1440,110 L0,110 Z' fill='%231a1a2e'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110' preserveAspectRatio='none'><path d='M0,80 C300,20 600,90 900,50 C1140,18 1320,80 1440,40 L1440,110 L0,110 Z' fill='%23000000'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
@@ -2178,20 +2178,33 @@ section {
 
 /* Bottom of services-overview → soft curve into stats (light into blue handled above by stats::before) */
 
-/* Bottom of why-choose → into featured */
+/* Bottom of why-choose (#f8f9fa) → into featured-work (#ffffff) */
 .why-choose-section::after {
     content: '';
     position: absolute;
     left: 0; right: 0; bottom: -1px;
     height: 80px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,30 C300,80 720,10 1080,45 C1260,62 1380,30 1440,50 L1440,80 L0,80 Z' fill='%23f8f9fa'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,30 C300,80 720,10 1080,45 C1260,62 1380,30 1440,50 L1440,80 L0,80 Z' fill='%23ffffff'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
     z-index: 4;
 }
 
-/* Page hero (sub-pages) → curve into white content */
+/* Bottom of featured-work (#ffffff) → into services-overview (#f8f9fa) */
+.featured-work-section::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 80px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,40 C280,10 560,70 840,40 C1080,16 1260,55 1440,30 L1440,80 L0,80 Z' fill='%23f8f9fa'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 4;
+}
+
+/* Page hero (sub-pages) → curve into white content (services/industries/contact) */
 .page-hero::after {
     content: '';
     position: absolute;
@@ -2202,6 +2215,12 @@ section {
     background-repeat: no-repeat;
     pointer-events: none;
     z-index: 4;
+}
+
+/* Override for pages where next section is #f8f9fa */
+.page-hero.about-hero::after,
+.page-hero.portfolio-hero::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'><path d='M0,30 C260,90 540,10 820,45 C1080,75 1260,25 1440,55 L1440,90 L0,90 Z' fill='%23f8f9fa'/></svg>");
 }
 
 /* Subtle scroll-driven shift on curves (parallax flow) */
