@@ -33,9 +33,9 @@ h1, h2,
 .page-hero-title,
 .section-title,
 .cta-title {
-    font-family: 'Orbitron', 'Montserrat', sans-serif;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-family: 'Black Ops One', 'Orbitron', 'Montserrat', sans-serif;
+    font-weight: 400;
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
