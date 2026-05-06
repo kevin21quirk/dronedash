@@ -2144,7 +2144,7 @@ section {
     left: 0; right: 0; top: -1px;
     height: 90px;
     transform: translateY(-99%);
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'><path d='M0,90 C260,30 520,90 760,55 C1000,20 1220,75 1440,40 L1440,90 L0,90 Z' fill='%233672cc'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'><path d='M0,60 C360,10 1080,90 1440,40 L1440,90 L0,90 Z' fill='%233672cc'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
