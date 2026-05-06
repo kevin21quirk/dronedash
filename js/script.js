@@ -487,4 +487,121 @@ $(document).ready(function() {
             }
         });
     }
+
+    // Chatbot functionality (only on home page)
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
+        const chatbotWidget = document.getElementById('chatbotWidget');
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotMinimize = document.getElementById('chatbotMinimize');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotSend = document.getElementById('chatbotSend');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const logo = document.querySelector('.logo');
+        let logoTransitioned = false;
+
+        // Show chatbot when scrolling down
+        $(window).scroll(function() {
+            const scrollTop = $(window).scrollTop();
+            
+            if (scrollTop > 200 && !logoTransitioned) {
+                // Trigger logo transition animation
+                if (logo) {
+                    logo.classList.add('transitioning');
+                }
+                
+                // Show chatbot after animation
+                setTimeout(() => {
+                    chatbotWidget.classList.add('visible');
+                    logoTransitioned = true;
+                }, 1200);
+            } else if (scrollTop <= 200 && logoTransitioned) {
+                // Hide chatbot when scrolling back to top
+                chatbotWidget.classList.remove('visible');
+                chatbotWidget.classList.remove('open');
+                if (logo) {
+                    logo.classList.remove('transitioning');
+                }
+                logoTransitioned = false;
+            }
+        });
+
+        // Toggle chatbot window
+        chatbotToggle.addEventListener('click', () => {
+            chatbotWidget.classList.toggle('open');
+        });
+
+        // Minimize chatbot
+        chatbotMinimize.addEventListener('click', () => {
+            chatbotWidget.classList.remove('open');
+        });
+
+        // Send message
+        function sendMessage() {
+            const message = chatbotInput.value.trim();
+            if (message === '') return;
+
+            // Add user message
+            const userMessageHTML = `
+                <div class="chatbot-message user-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            chatbotMessages.insertAdjacentHTML('beforeend', userMessageHTML);
+            chatbotInput.value = '';
+
+            // Scroll to bottom
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+            // Simulate bot response
+            setTimeout(() => {
+                const botResponse = getBotResponse(message);
+                const botMessageHTML = `
+                    <div class="chatbot-message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>${botResponse}</p>
+                        </div>
+                    </div>
+                `;
+                chatbotMessages.insertAdjacentHTML('beforeend', botMessageHTML);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }, 800);
+        }
+
+        // Simple bot response logic
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('quote')) {
+                return "Our pricing varies based on project scope and requirements. Click 'Get a Quote' to receive a personalized estimate, or visit our Contact page to discuss your specific needs!";
+            } else if (lowerMessage.includes('service') || lowerMessage.includes('what do you')) {
+                return "We offer Commercial Real Estate photography, Wedding & Event coverage, Construction Inspection, Cinematic Production, and 3D Mapping & Surveying. Check out our Services page for more details!";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('call')) {
+                return "You can reach us through our Contact page, or call us directly. We typically respond within 24 hours!";
+            } else if (lowerMessage.includes('portfolio') || lowerMessage.includes('work') || lowerMessage.includes('example')) {
+                return "Check out our Portfolio page to see examples of our aerial photography and videography work across various industries!";
+            } else if (lowerMessage.includes('certified') || lowerMessage.includes('license') || lowerMessage.includes('legal')) {
+                return "Yes! We are fully FAA Part 107 certified and insured. Safety and compliance are our top priorities.";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                return "Hello! How can I help you learn more about our drone services today?";
+            } else {
+                return "That's a great question! For detailed information, please visit our Contact page or request a quote. Our team will be happy to assist you!";
+            }
+        }
+
+        // Event listeners
+        chatbotSend.addEventListener('click', sendMessage);
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    }
 });
