@@ -169,10 +169,53 @@ $(document).ready(function() {
 
     $(document).keyup(function(e) {
         if (e.key === "Escape") {
-            $('.quote-modal, .thank-you-modal').removeClass('active');
+            $('.quote-modal, .thank-you-modal, .info-modal').removeClass('active');
             $('body').css('overflow', 'auto');
         }
     });
+
+    // Info popup modal for mega menu items without dedicated sections
+    $(document).on('click', '.info-popup-trigger', function(e) {
+        e.preventDefault();
+        const $trigger = $(this);
+        const icon = $trigger.data('icon') || 'fas fa-info-circle';
+        const title = $trigger.data('title') || 'More Info';
+        const content = $trigger.data('content') || '';
+        $('#infoModalIcon').attr('class', icon + ' info-modal-icon');
+        $('#infoModalTitle').text(title);
+        $('#infoModalText').text(content);
+        $('#infoModal').addClass('active');
+        $('body').css('overflow', 'hidden');
+    });
+
+    $('#closeInfoModal, #infoModalClose2').click(function() {
+        $('#infoModal').removeClass('active');
+        $('body').css('overflow', 'auto');
+    });
+
+    $('.info-modal .modal-overlay').click(function(e) {
+        if (e.target === this) {
+            $('#infoModal').removeClass('active');
+            $('body').css('overflow', 'auto');
+        }
+    });
+
+    // Portfolio: apply filter from URL query parameter on load
+    if (window.location.pathname.indexOf('portfolio') !== -1) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        if (filterParam) {
+            setTimeout(function() {
+                const $btn = $('.filter-btn[data-filter="' + filterParam + '"]');
+                if ($btn.length) {
+                    $btn.trigger('click');
+                    $('html, body').animate({
+                        scrollTop: $('.portfolio-filter-section').offset().top - 100
+                    }, 600);
+                }
+            }, 300);
+        }
+    }
 
     const nav = $('#mainNav');
     const navToggle = $('#navToggle');

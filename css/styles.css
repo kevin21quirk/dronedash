@@ -2073,8 +2073,31 @@ section {
     }
 }
 
+/* Scroll offset for fixed nav when jumping to anchors */
+.service-block,
+.industry-detail-title,
+.service-detail-title,
+section[id],
+[id="team"],
+[id="equipment"],
+[id="certifications"],
+[id="commercial"],
+[id="weddings"],
+[id="construction"],
+[id="cinematic"],
+[id="mapping"],
+[id="thermal"],
+[id="real-estate"],
+[id="events"],
+[id="agriculture"],
+[id="infrastructure"],
+[id="media"] {
+    scroll-margin-top: 120px;
+}
+
 .quote-modal,
-.thank-you-modal {
+.thank-you-modal,
+.info-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -2084,6 +2107,63 @@ section {
     display: none;
     align-items: center;
     justify-content: center;
+}
+
+.info-modal.active {
+    display: flex;
+}
+
+.info-modal .modal-overlay {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.info-modal .modal-overlay::after {
+    display: none;
+}
+
+.info-modal .modal-container {
+    animation: modalSlideUp 0.4s ease-out;
+    max-width: 600px;
+}
+
+.info-modal-content {
+    padding: 3rem;
+    text-align: center;
+}
+
+.info-modal-icon {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.info-modal-content h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.info-modal-content p {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.info-modal-content .btn {
+    margin: 0.25rem;
+}
+
+@media screen and (max-width: 768px) {
+    .info-modal-content {
+        padding: 2rem 1.5rem;
+    }
+    .info-modal-icon {
+        font-size: 2.75rem;
+    }
+    .info-modal-content h2 {
+        font-size: 1.4rem;
+    }
 }
 
 .quote-modal.active,
