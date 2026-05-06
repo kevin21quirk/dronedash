@@ -2156,8 +2156,15 @@ section {
 
 /* 2. CUSTOM CURSOR */
 @media (hover: hover) and (pointer: fine) {
-    body { cursor: none; }
-    a, button, .btn, input, select, textarea, .nav-link, .filter-btn { cursor: none; }
+    body.pss-cursor-active,
+    body.pss-cursor-active a,
+    body.pss-cursor-active button,
+    body.pss-cursor-active .btn,
+    body.pss-cursor-active input,
+    body.pss-cursor-active select,
+    body.pss-cursor-active textarea,
+    body.pss-cursor-active .nav-link,
+    body.pss-cursor-active .filter-btn { cursor: none; }
 }
 .pss-cursor-dot,
 .pss-cursor-ring {

@@ -45,6 +45,7 @@
     /* ---------- 2. CUSTOM CURSOR ---------- */
     function initCursor() {
         if (isTouch) return;
+        document.body.classList.add('pss-cursor-active');
         const dot = document.createElement('div');
         const ring = document.createElement('div');
         dot.className = 'pss-cursor-dot';
