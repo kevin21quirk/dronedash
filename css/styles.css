@@ -2163,17 +2163,128 @@ section {
     z-index: 1;
 }
 
-/* Bottom of CTA section → curving into dark footer (#000000) */
-.cta-section::after {
+/* === DRAMATIC LIQUID DRIP: CTA → FOOTER === */
+/* Disable old simple wave */
+.cta-section::after { display: none !important; }
+
+/* Enhanced CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, #3672cc 0%, #2a5ba8 55%, #1f4480 100%) !important;
+    padding: 9rem 0 14rem !important;
+    overflow: hidden;
+    position: relative;
+}
+.cta-section::before {
     content: '';
     position: absolute;
-    left: 0; right: 0; bottom: -1px;
-    height: 110px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 110' preserveAspectRatio='none'><path d='M0,80 C300,20 600,90 900,50 C1140,18 1320,80 1440,40 L1440,110 L0,110 Z' fill='%23000000'/></svg>");
+    top: 50%;
+    left: 50%;
+    width: min(900px, 90vw);
+    height: min(900px, 90vw);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 35%, transparent 65%);
+    pointer-events: none;
+    z-index: 1;
+    animation: ctaGlowPulse 6s ease-in-out infinite alternate;
+}
+@keyframes ctaGlowPulse {
+    0% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+}
+.cta-section .cta-content {
+    position: relative;
+    z-index: 2;
+}
+.cta-section .cta-title {
+    font-size: clamp(2.5rem, 7vw, 5rem) !important;
+    line-height: 1.05 !important;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+}
+.cta-section .cta-text {
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.95;
+}
+.cta-section .cta-buttons {
+    margin-top: 3rem;
+}
+
+/* Decorative stencil tag above title */
+.cta-section .cta-content::before {
+    content: '— READY FOR TAKEOFF —';
+    display: block;
+    font-family: 'Saira Stencil One', 'Black Ops One', sans-serif;
+    letter-spacing: 8px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.75rem;
+}
+
+/* Footer needs space + stacking when drip is present */
+.cta-section + .main-footer {
+    position: relative;
+    padding-top: 14rem !important;
+    z-index: 1;
+}
+
+/* The dramatic liquid drip — only when CTA precedes footer */
+.cta-section + .main-footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0; right: 0;
+    height: 220px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220' preserveAspectRatio='none'><path d='M 0,30 C 60,40 120,15 180,30 C 200,30 210,60 220,110 C 225,150 240,150 245,110 C 250,60 260,30 280,30 C 320,40 380,15 440,30 C 460,30 475,80 490,160 C 500,195 525,195 535,160 C 545,80 560,30 580,30 C 620,45 680,15 740,30 C 760,30 770,55 780,100 C 785,135 800,135 805,100 C 810,55 825,30 840,30 C 880,40 940,15 1000,30 C 1020,30 1035,80 1050,165 C 1060,200 1085,200 1095,165 C 1105,80 1120,30 1140,30 C 1180,40 1240,15 1300,30 C 1310,30 1318,55 1325,90 C 1330,115 1345,115 1350,90 C 1355,55 1365,30 1380,30 C 1410,40 1430,20 1440,30 L 1440,0 L 0,0 Z' fill='%232a5ba8'/></svg>");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     pointer-events: none;
-    z-index: 4;
+    z-index: 2;
+    filter: drop-shadow(0 10px 25px rgba(42, 91, 168, 0.35));
+}
+
+/* Detached splash droplets */
+.cta-section + .main-footer::after {
+    content: '';
+    position: absolute;
+    top: 80px;
+    left: 0; right: 0;
+    height: 180px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 180' preserveAspectRatio='none'><circle cx='370' cy='25' r='6' fill='%232a5ba8'/><ellipse cx='370' cy='70' rx='4' ry='8' fill='%232a5ba8'/><circle cx='370' cy='115' r='3' fill='%232a5ba8' opacity='0.7'/><circle cx='670' cy='35' r='4' fill='%232a5ba8'/><ellipse cx='670' cy='80' rx='3' ry='6' fill='%232a5ba8' opacity='0.8'/><circle cx='925' cy='20' r='5' fill='%232a5ba8'/><ellipse cx='925' cy='65' rx='3' ry='7' fill='%232a5ba8'/><circle cx='1225' cy='40' r='5' fill='%232a5ba8'/><ellipse cx='1225' cy='90' rx='3' ry='6' fill='%232a5ba8' opacity='0.75'/><circle cx='1225' cy='130' r='2' fill='%232a5ba8' opacity='0.6'/><circle cx='130' cy='30' r='3' fill='%232a5ba8' opacity='0.7'/><circle cx='130' cy='65' r='2' fill='%232a5ba8' opacity='0.5'/></svg>");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 1;
+    animation: dripFall 3.5s ease-in infinite;
+}
+@keyframes dripFall {
+    0% { transform: translateY(-15px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(40px); opacity: 0; }
+}
+
+/* Mobile drip — smaller but still dramatic */
+@media screen and (max-width: 768px) {
+    .cta-section {
+        padding: 6rem 0 10rem !important;
+    }
+    .cta-section + .main-footer {
+        padding-top: 10rem !important;
+    }
+    .cta-section + .main-footer::before {
+        height: 140px;
+    }
+    .cta-section + .main-footer::after {
+        top: 50px;
+        height: 110px;
+    }
+    .cta-section .cta-content::before {
+        letter-spacing: 5px;
+        font-size: 0.8rem;
+    }
 }
 
 /* Bottom of services-overview → soft curve into stats (light into blue handled above by stats::before) */
