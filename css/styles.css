@@ -2412,18 +2412,17 @@ section {
     color: #fff;
 }
 .pss-loader-drone {
-    width: 140px;
-    height: 140px;
+    width: 200px;
+    height: 200px;
     animation: pssLoaderHover 2s ease-in-out infinite;
 }
 .pss-loader-drone .prop {
     fill: #3672cc;
     opacity: 0.85;
     transform-origin: center;
+    transform-box: fill-box;
     animation: pssPropSpin 0.4s linear infinite;
 }
-.pss-loader-drone .prop-tl,
-.pss-loader-drone .prop-br { transform-box: fill-box; }
 .pss-loader-drone .arm {
     stroke: #5a9fd4;
     stroke-width: 6;

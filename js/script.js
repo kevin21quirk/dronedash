@@ -498,6 +498,12 @@ $(document).ready(function() {
         const chatbotMessages = document.getElementById('chatbotMessages');
         const logo = document.querySelector('.logo');
         const logoImage = document.querySelector('.logo-image');
+        
+        // Exit if chatbot elements don't exist
+        if (!chatbotWidget || !chatbotToggle || !chatbotMinimize || !chatbotInput || !chatbotSend || !chatbotMessages) {
+            return;
+        }
+        
         let logoTransitioned = false;
         let flyingLogoClone = null;
 
