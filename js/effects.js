@@ -22,25 +22,25 @@
                         <line x1="145" y1="55" x2="100" y2="100" class="arm"/>
                         <line x1="55" y1="145" x2="100" y2="100" class="arm"/>
                         <line x1="145" y1="145" x2="100" y2="100" class="arm"/>
-                        <g class="prop prop-tl" transform="translate(40, 40)">
-                            <ellipse cx="0" cy="-8" rx="18" ry="6" fill="#3672cc"/>
-                            <ellipse cx="0" cy="8" rx="18" ry="6" fill="#3672cc"/>
-                            <circle cx="0" cy="0" r="4" fill="#2a5ba8"/>
+                        <g class="prop prop-tl">
+                            <ellipse cx="40" cy="32" rx="18" ry="6" fill="#3672cc"/>
+                            <ellipse cx="40" cy="48" rx="18" ry="6" fill="#3672cc"/>
+                            <circle cx="40" cy="40" r="4" fill="#2a5ba8"/>
                         </g>
-                        <g class="prop prop-tr" transform="translate(160, 40)">
-                            <ellipse cx="0" cy="-8" rx="18" ry="6" fill="#3672cc"/>
-                            <ellipse cx="0" cy="8" rx="18" ry="6" fill="#3672cc"/>
-                            <circle cx="0" cy="0" r="4" fill="#2a5ba8"/>
+                        <g class="prop prop-tr">
+                            <ellipse cx="160" cy="32" rx="18" ry="6" fill="#3672cc"/>
+                            <ellipse cx="160" cy="48" rx="18" ry="6" fill="#3672cc"/>
+                            <circle cx="160" cy="40" r="4" fill="#2a5ba8"/>
                         </g>
-                        <g class="prop prop-bl" transform="translate(40, 160)">
-                            <ellipse cx="0" cy="-8" rx="18" ry="6" fill="#3672cc"/>
-                            <ellipse cx="0" cy="8" rx="18" ry="6" fill="#3672cc"/>
-                            <circle cx="0" cy="0" r="4" fill="#2a5ba8"/>
+                        <g class="prop prop-bl">
+                            <ellipse cx="40" cy="152" rx="18" ry="6" fill="#3672cc"/>
+                            <ellipse cx="40" cy="168" rx="18" ry="6" fill="#3672cc"/>
+                            <circle cx="40" cy="160" r="4" fill="#2a5ba8"/>
                         </g>
-                        <g class="prop prop-br" transform="translate(160, 160)">
-                            <ellipse cx="0" cy="-8" rx="18" ry="6" fill="#3672cc"/>
-                            <ellipse cx="0" cy="8" rx="18" ry="6" fill="#3672cc"/>
-                            <circle cx="0" cy="0" r="4" fill="#2a5ba8"/>
+                        <g class="prop prop-br">
+                            <ellipse cx="160" cy="152" rx="18" ry="6" fill="#3672cc"/>
+                            <ellipse cx="160" cy="168" rx="18" ry="6" fill="#3672cc"/>
+                            <circle cx="160" cy="160" r="4" fill="#2a5ba8"/>
                         </g>
                         <rect x="80" y="80" width="40" height="40" rx="6" class="body"/>
                     </g>

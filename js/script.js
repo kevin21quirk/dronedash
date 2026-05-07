@@ -499,15 +499,8 @@ $(document).ready(function() {
         const logo = document.querySelector('.logo');
         const logoImage = document.querySelector('.logo-image');
         
-        console.log('Chatbot init:', {
-            chatbotWidget: !!chatbotWidget,
-            chatbotToggle: !!chatbotToggle,
-            logoImage: !!logoImage
-        });
-        
         // Exit if chatbot elements don't exist
         if (!chatbotWidget || !chatbotToggle || !chatbotMinimize || !chatbotInput || !chatbotSend || !chatbotMessages) {
-            console.log('Chatbot elements missing, exiting');
             return;
         }
         
@@ -555,13 +548,11 @@ $(document).ready(function() {
             const scrollTop = $(window).scrollTop();
             
             if (scrollTop > 200 && !logoTransitioned) {
-                console.log('Triggering chatbot animation at scroll:', scrollTop);
                 // Create and animate flying logo clone
                 createFlyingLogo();
                 
                 // Show chatbot after animation
                 setTimeout(() => {
-                    console.log('Showing chatbot widget');
                     chatbotWidget.classList.add('visible');
                     logoTransitioned = true;
                 }, 2000);

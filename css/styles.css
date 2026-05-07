@@ -2418,7 +2418,20 @@ section {
 }
 .pss-loader-drone .prop {
     opacity: 0.9;
+    transform-origin: 0 0;
     animation: pssPropSpin 0.6s linear infinite;
+}
+.pss-loader-drone .prop-tl {
+    transform-origin: 40px 40px;
+}
+.pss-loader-drone .prop-tr {
+    transform-origin: 160px 40px;
+}
+.pss-loader-drone .prop-bl {
+    transform-origin: 40px 160px;
+}
+.pss-loader-drone .prop-br {
+    transform-origin: 160px 160px;
 }
 .pss-loader-drone .arm {
     stroke: #5a9fd4;
@@ -2431,6 +2444,7 @@ section {
     stroke-width: 2;
 }
 @keyframes pssPropSpin {
+    from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 @keyframes pssLoaderHover {
@@ -4115,23 +4129,23 @@ section[id],
 @keyframes logoFlyToChat {
     0% {
         opacity: 1;
-        transform: translate(0, 0) scale(1) rotate(0deg);
+        transform: translate(0, 0) scale(1);
     }
     30% {
         opacity: 1;
-        transform: translate(30vw, 15vh) scale(0.8) rotate(90deg);
+        transform: translate(30vw, 15vh) scale(0.8);
     }
     60% {
         opacity: 1;
-        transform: translate(60vw, 40vh) scale(0.6) rotate(180deg);
+        transform: translate(60vw, 40vh) scale(0.6);
     }
     85% {
         opacity: 1;
-        transform: translate(85vw, 70vh) scale(0.4) rotate(270deg);
+        transform: translate(85vw, 70vh) scale(0.4);
     }
     100% {
         opacity: 0;
-        transform: translate(calc(100vw - 100px), calc(100vh - 100px)) scale(0.3) rotate(360deg);
+        transform: translate(calc(100vw - 100px), calc(100vh - 100px)) scale(0.3);
     }
 }
 
