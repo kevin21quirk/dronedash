@@ -497,31 +497,70 @@ $(document).ready(function() {
         const chatbotSend = document.getElementById('chatbotSend');
         const chatbotMessages = document.getElementById('chatbotMessages');
         const logo = document.querySelector('.logo');
+        const logoImage = document.querySelector('.logo-image');
         let logoTransitioned = false;
+        let flyingLogoClone = null;
+
+        // Create flying logo clone
+        function createFlyingLogo() {
+            if (!logoImage || flyingLogoClone) return;
+
+            // Get logo position and size
+            const logoRect = logoImage.getBoundingClientRect();
+            
+            // Create clone
+            flyingLogoClone = document.createElement('div');
+            flyingLogoClone.className = 'flying-logo-clone';
+            flyingLogoClone.style.left = logoRect.left + 'px';
+            flyingLogoClone.style.top = logoRect.top + 'px';
+            flyingLogoClone.style.width = logoRect.width + 'px';
+            flyingLogoClone.style.height = logoRect.height + 'px';
+            
+            const clonedImg = document.createElement('img');
+            clonedImg.src = logoImage.src;
+            clonedImg.alt = 'Flying Logo';
+            flyingLogoClone.appendChild(clonedImg);
+            
+            document.body.appendChild(flyingLogoClone);
+            
+            // Trigger animation after a brief delay
+            setTimeout(() => {
+                flyingLogoClone.classList.add('animating');
+            }, 50);
+            
+            // Remove clone after animation completes
+            setTimeout(() => {
+                if (flyingLogoClone && flyingLogoClone.parentNode) {
+                    flyingLogoClone.parentNode.removeChild(flyingLogoClone);
+                    flyingLogoClone = null;
+                }
+            }, 2100);
+        }
 
         // Show chatbot when scrolling down
         $(window).scroll(function() {
             const scrollTop = $(window).scrollTop();
             
             if (scrollTop > 200 && !logoTransitioned) {
-                // Trigger logo transition animation
-                if (logo) {
-                    logo.classList.add('transitioning');
-                }
+                // Create and animate flying logo clone
+                createFlyingLogo();
                 
                 // Show chatbot after animation
                 setTimeout(() => {
                     chatbotWidget.classList.add('visible');
                     logoTransitioned = true;
-                }, 1200);
+                }, 2000);
             } else if (scrollTop <= 200 && logoTransitioned) {
                 // Hide chatbot when scrolling back to top
                 chatbotWidget.classList.remove('visible');
                 chatbotWidget.classList.remove('open');
-                if (logo) {
-                    logo.classList.remove('transitioning');
-                }
                 logoTransitioned = false;
+                
+                // Remove any existing flying logo
+                if (flyingLogoClone && flyingLogoClone.parentNode) {
+                    flyingLogoClone.parentNode.removeChild(flyingLogoClone);
+                    flyingLogoClone = null;
+                }
             }
         });
 
