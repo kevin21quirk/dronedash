@@ -504,69 +504,21 @@ $(document).ready(function() {
             return;
         }
         
-        let logoTransitioned = false;
-        let flyingLogoClone = null;
-
-        // Create flying logo clone
-        function createFlyingLogo() {
-            if (!logoImage || flyingLogoClone) return;
-
-            // Get logo position and size
-            const logoRect = logoImage.getBoundingClientRect();
-            
-            // Create clone
-            flyingLogoClone = document.createElement('div');
-            flyingLogoClone.className = 'flying-logo-clone';
-            flyingLogoClone.style.left = logoRect.left + 'px';
-            flyingLogoClone.style.top = logoRect.top + 'px';
-            flyingLogoClone.style.width = logoRect.width + 'px';
-            flyingLogoClone.style.height = logoRect.height + 'px';
-            
-            const clonedImg = document.createElement('img');
-            clonedImg.src = logoImage.src;
-            clonedImg.alt = 'Flying Logo';
-            flyingLogoClone.appendChild(clonedImg);
-            
-            document.body.appendChild(flyingLogoClone);
-            
-            // Trigger animation after a brief delay
-            setTimeout(() => {
-                flyingLogoClone.classList.add('animating');
-            }, 50);
-            
-            // Remove clone after animation completes
-            setTimeout(() => {
-                if (flyingLogoClone && flyingLogoClone.parentNode) {
-                    flyingLogoClone.parentNode.removeChild(flyingLogoClone);
-                    flyingLogoClone = null;
-                }
-            }, 2100);
-        }
+        let chatbotShown = false;
 
         // Show chatbot when scrolling down
         $(window).scroll(function() {
             const scrollTop = $(window).scrollTop();
             
-            if (scrollTop > 200 && !logoTransitioned) {
-                // Create and animate flying logo clone
-                createFlyingLogo();
-                
-                // Show chatbot after animation
-                setTimeout(() => {
-                    chatbotWidget.classList.add('visible');
-                    logoTransitioned = true;
-                }, 2000);
-            } else if (scrollTop <= 200 && logoTransitioned) {
+            if (scrollTop > 200 && !chatbotShown) {
+                // Show chatbot
+                chatbotWidget.classList.add('visible');
+                chatbotShown = true;
+            } else if (scrollTop <= 200 && chatbotShown) {
                 // Hide chatbot when scrolling back to top
                 chatbotWidget.classList.remove('visible');
                 chatbotWidget.classList.remove('open');
-                logoTransitioned = false;
-                
-                // Remove any existing flying logo
-                if (flyingLogoClone && flyingLogoClone.parentNode) {
-                    flyingLogoClone.parentNode.removeChild(flyingLogoClone);
-                    flyingLogoClone = null;
-                }
+                chatbotShown = false;
             }
         });
 
