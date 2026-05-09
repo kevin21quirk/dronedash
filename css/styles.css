@@ -20,6 +20,9 @@ body {
     color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -384,25 +387,85 @@ h1, h2,
 
     .nav-menu {
         position: fixed;
-        top: 80px;
+        top: 0;
         right: -100%;
         width: 100%;
-        max-width: 300px;
-        background: rgba(0, 0, 0, 0.98);
+        max-width: 320px;
+        height: 100vh;
+        background: linear-gradient(180deg, #0a0e1a 0%, #1a2332 100%);
         flex-direction: column;
         align-items: flex-start;
-        padding: 2rem;
-        transition: var(--transition);
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+        padding: 100px 2rem 2rem 2rem;
+        transition: right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.7);
+        overflow-y: auto;
+        z-index: 999;
     }
 
     .nav-menu.active {
         right: 0;
     }
 
+    .nav-menu li {
+        width: 100%;
+        margin: 0.5rem 0;
+        border-bottom: 1px solid rgba(54, 114, 204, 0.2);
+        animation: slideInRight 0.4s ease forwards;
+        opacity: 0;
+    }
+
+    .nav-menu.active li:nth-child(1) { animation-delay: 0.1s; }
+    .nav-menu.active li:nth-child(2) { animation-delay: 0.15s; }
+    .nav-menu.active li:nth-child(3) { animation-delay: 0.2s; }
+    .nav-menu.active li:nth-child(4) { animation-delay: 0.25s; }
+    .nav-menu.active li:nth-child(5) { animation-delay: 0.3s; }
+    .nav-menu.active li:nth-child(6) { animation-delay: 0.35s; }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
     .nav-link {
         width: 100%;
         padding: 1rem 0;
+        font-size: 1.1rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--secondary-color);
+        transform: translateX(5px);
+    }
+
+    .nav-link i {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+    }
+
+    .btn-contact {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white !important;
+        padding: 1rem 1.5rem !important;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: 1rem;
+        box-shadow: 0 4px 15px rgba(54, 114, 204, 0.4);
+    }
+
+    .btn-contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(54, 114, 204, 0.6);
     }
 }
 
@@ -3487,21 +3550,6 @@ section[id],
         padding: 0;
     }
     
-    /* Navigation mobile */
-    .nav-menu {
-        padding: 1rem;
-    }
-    
-    .nav-menu li {
-        margin: 0;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .nav-menu li:last-child {
-        border-bottom: none;
-    }
-    
     /* Hide mega menu on mobile */
     .mega-menu {
         display: none !important;
@@ -3513,18 +3561,46 @@ section[id],
         font-size: 0.95rem;
     }
     
-    /* Prevent horizontal overflow */
-    body {
+    /* Prevent horizontal overflow and bouncing */
+    html, body {
         overflow-x: hidden;
+        max-width: 100%;
+        position: relative;
+    }
+    
+    * {
+        max-width: 100%;
     }
     
     .grid-container {
         padding-left: 1rem;
         padding-right: 1rem;
+        max-width: 100%;
+        overflow-x: hidden;
     }
     
     section {
         padding: 3rem 0;
+        overflow-x: hidden;
+    }
+    
+    img, video, iframe {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .hero-section,
+    .stats-section,
+    .why-choose-section,
+    .cta-section {
+        overflow-x: hidden;
+    }
+    
+    /* Fix any wide elements */
+    .row, .grid-x {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
     }
 }
 
